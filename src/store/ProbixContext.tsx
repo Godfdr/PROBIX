@@ -43,44 +43,68 @@ interface ProbixContextType {
 const ProbixContext = createContext<ProbixContextType | undefined>(undefined);
 
 export function ProbixProvider({ children }: { children: ReactNode }) {
-  const [balance, setBalance] = useState(0);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [positions, setPositions] = useState<Position[]>([]);
-  const [markets, setMarkets] = useState<Market[]>([]);
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [watchlist, setWatchlist] = useState<number[]>([]);
-  const [walletAddress, setWalletAddress] = useState<string | null>(null);
-
-  // Load state from localStorage on mount
-  useEffect(() => {
-    const savedBalance = localStorage.getItem('probix_balance');
-    const savedAuth = localStorage.getItem('probix_auth');
-    const savedPositions = localStorage.getItem('probix_positions');
-    const savedTransactions = localStorage.getItem('probix_transactions');
-    const savedWatchlist = localStorage.getItem('probix_watchlist');
-    const savedWallet = localStorage.getItem('probix_wallet');
-    const savedMarkets = localStorage.getItem('probix_markets');
-
-    if (savedBalance) setBalance(parseFloat(savedBalance));
-    if (savedAuth === 'true') setIsAuthenticated(true);
-    if (savedPositions) setPositions(JSON.parse(savedPositions));
-    if (savedTransactions) setTransactions(JSON.parse(savedTransactions));
-    if (savedWatchlist) setWatchlist(JSON.parse(savedWatchlist));
-    if (savedWallet) setWalletAddress(savedWallet);
-
-    if (savedMarkets) {
-      setMarkets(JSON.parse(savedMarkets));
-    } else {
-      const initialMarkets = MARKETS.map(m => ({
-        ...m,
-        yesPrice: m.percentage / 100,
-        noPrice: (100 - m.percentage) / 100,
-      }));
-      setMarkets(initialMarkets);
+  // Initialize state from localStorage directly to avoid cascading renders in useEffect
+  const [balance, setBalance] = useState(() => {
+    if (typeof window !== 'undefined') {
+        const saved = localStorage.getItem('probix_balance');
+        return saved ? parseFloat(saved) : 0;
     }
-  }, []);
+    return 0;
+  });
 
-  // Persist state to localStorage
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem('probix_auth') === 'true';
+    }
+    return false;
+  });
+
+  const [positions, setPositions] = useState<Position[]>(() => {
+    if (typeof window !== 'undefined') {
+        const saved = localStorage.getItem('probix_positions');
+        return saved ? JSON.parse(saved) : [];
+    }
+    return [];
+  });
+
+  const [transactions, setTransactions] = useState<Transaction[]>(() => {
+    if (typeof window !== 'undefined') {
+        const saved = localStorage.getItem('probix_transactions');
+        return saved ? JSON.parse(saved) : [];
+    }
+    return [];
+  });
+
+  const [watchlist, setWatchlist] = useState<number[]>(() => {
+    if (typeof window !== 'undefined') {
+        const saved = localStorage.getItem('probix_watchlist');
+        return saved ? JSON.parse(saved) : [];
+    }
+    return [];
+  });
+
+  const [walletAddress, setWalletAddress] = useState<string | null>(() => {
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem('probix_wallet');
+    }
+    return null;
+  });
+
+  const [markets, setMarkets] = useState<Market[]>(() => {
+    if (typeof window !== 'undefined') {
+        const saved = localStorage.getItem('probix_markets');
+        if (saved) return JSON.parse(saved);
+
+        return MARKETS.map(m => ({
+            ...m,
+            yesPrice: m.percentage / 100,
+            noPrice: (100 - m.percentage) / 100,
+        }));
+    }
+    return [];
+  });
+
+  // Persist state to localStorage on every change
   useEffect(() => {
     localStorage.setItem('probix_balance', balance.toString());
     localStorage.setItem('probix_auth', isAuthenticated.toString());
@@ -97,7 +121,6 @@ export function ProbixProvider({ children }: { children: ReactNode }) {
 
     const interval = setInterval(() => {
       setMarkets(prevMarkets => prevMarkets.map(m => {
-        // More "jittery" simulation
         const isVolatile = Math.random() > 0.8;
         const volatility = isVolatile ? 0.05 : 0.015;
         const change = (Math.random() * volatility * 2) - volatility;
@@ -116,13 +139,14 @@ export function ProbixProvider({ children }: { children: ReactNode }) {
           trend: `${change >= 0 ? '+' : ''}${(Math.abs(change) * 100).toFixed(1)}% now`
         };
       }));
-    }, 3000); // Faster ticks
+    }, 3000);
     return () => clearInterval(interval);
   }, [markets.length]);
 
   const login = () => {
     setIsAuthenticated(true);
-    setWalletAddress(`0x${Math.random().toString(16).slice(2, 10)}...${Math.random().toString(16).slice(2, 6)}`);
+    const newAddress = `0x${Math.random().toString(16).slice(2, 10)}...${Math.random().toString(16).slice(2, 6)}`;
+    setWalletAddress(newAddress);
     if (balance === 0) {
         setBalance(50000);
         setTransactions([{

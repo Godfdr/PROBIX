@@ -3,10 +3,7 @@
 import React, { useState, useRef } from 'react';
 import {
   motion,
-  useScroll,
-  useTransform,
   AnimatePresence,
-  useSpring,
   useMotionValue
 } from 'framer-motion';
 import {
@@ -15,7 +12,6 @@ import {
   Shield,
   Zap,
   Lock,
-  ChevronRight,
   User,
   CirclePlay
 } from 'lucide-react';
@@ -33,6 +29,7 @@ export default function ProbixLandingClient() {
   const { login, isAuthenticated } = useProbix();
   const [mounted, setMounted] = useState(false);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(() => {
     setMounted(true);
   }, []);
@@ -47,20 +44,6 @@ export default function ProbixLandingClient() {
   const y = useMotionValue(0);
 
   const springConfig = { damping: 40, stiffness: 200, mass: 1 };
-  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [15, -15]), springConfig);
-  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-15, 15]), springConfig);
-
-  const glareX = useSpring(useTransform(x, [-0.5, 0.5], [100, 0]), springConfig);
-  const glareY = useSpring(useTransform(y, [-0.5, 0.5], [100, 0]), springConfig);
-
-  const glareLeft = useTransform(glareX, [0, 100], ["-20%", "80%"]);
-  const glareTop = useTransform(glareY, [0, 100], ["-20%", "80%"]);
-
-  const floatX = useSpring(useTransform(x, [-0.5, 0.5], [-50, 50]), springConfig);
-  const floatY = useSpring(useTransform(y, [-0.5, 0.5], [-50, 50]), springConfig);
-
-  const reverseFloatX = useTransform(floatX, (v: number) => -v);
-  const reverseFloatY = useTransform(floatY, (v: number) => -v);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -75,8 +58,6 @@ export default function ProbixLandingClient() {
 
   // Scroll Parallax
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: containerRef });
-  const textOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
   if (!mounted) return null;
 
@@ -215,7 +196,6 @@ export default function ProbixLandingClient() {
                 </div>
             </motion.div>
 
-                </motion.div>
             <div className="h-20" />
           </motion.section>
         )}

@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, Zap, X, ChevronDown } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Zap, X } from 'lucide-react';
 import { Market } from '@/types/market';
 import { Button } from '@/components/ui/Button';
 import { useProbix } from '@/store/ProbixContext';
@@ -16,12 +16,12 @@ export const TradingDrawer = ({ market, onClose }: { market: Market | null; onCl
   const [isExecuting, setIsExecuting] = useState(false);
 
   // Use useMemo to avoid calculations if market is null
-  const { currentPrice, potentialPayout, roi } = useMemo(() => {
-    if (!market) return { currentPrice: 0, potentialPayout: "0.00", roi: "0.0" };
+  const { potentialPayout, roi } = useMemo(() => {
+    if (!market) return { potentialPayout: "0.00", roi: "0.0" };
     const price = side === 'yes' ? market.yesPrice : market.noPrice;
     const payout = tradeAmount && !isNaN(parseFloat(tradeAmount)) ? (parseFloat(tradeAmount) * (1 / price)).toFixed(2) : "0.00";
     const calculatedRoi = ((1 / price - 1) * 100).toFixed(1);
-    return { currentPrice: price, potentialPayout: payout, roi: calculatedRoi };
+    return { potentialPayout: payout, roi: calculatedRoi };
   }, [market, side, tradeAmount]);
 
   if (!market) return null;

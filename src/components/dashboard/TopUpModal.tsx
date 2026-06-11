@@ -12,7 +12,7 @@ interface TopUpModalProps {
 }
 
 export function TopUpModal({ onClose }: TopUpModalProps) {
-  const { setBalance, balance, transactions, setTransactions } = useProbix() as any; // Temporary cast for simulation
+  const { setBalance, balance, setTransactions } = useProbix();
   const [amount, setAmount] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -24,16 +24,14 @@ export function TopUpModal({ onClose }: TopUpModalProps) {
     setIsProcessing(true);
     setTimeout(() => {
       setBalance(balance + amt);
-      if (setTransactions) {
-        setTransactions((prev: any) => [{
-          id: `tx-${Date.now()}`,
-          marketTitle: 'Terminal Funding',
-          amount: amt,
-          type: 'topup',
-          timestamp: Date.now(),
-          status: 'success'
-        }, ...prev]);
-      }
+      setTransactions((prev) => [{
+        id: `tx-${Date.now()}`,
+        marketTitle: 'Terminal Funding',
+        amount: amt,
+        type: 'topup',
+        timestamp: Date.now(),
+        status: 'success'
+      }, ...prev]);
       setIsProcessing(false);
       setIsSuccess(true);
       toast.success('Terminal funded', {
