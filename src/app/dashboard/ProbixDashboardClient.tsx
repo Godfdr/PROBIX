@@ -228,163 +228,210 @@ export default function ProbixDashboardClient() {
 
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
 
-        <header className="h-24 border-b border-probix-border flex items-center justify-between px-10 bg-probix-bg/80 backdrop-blur-md z-40 shrink-0">
-          <div className="flex items-center gap-6 flex-1 max-w-2xl text-left">
-             <div className="relative w-full">
-                <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-probix-muted" size={20} />
+        <header className="h-20 border-b border-probix-border flex items-center justify-between px-8 bg-probix-bg/80 backdrop-blur-md z-40 shrink-0">
+          <div className="flex items-center gap-6 flex-1 max-w-xl text-left">
+             <div className="relative w-full group">
+                <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-probix-muted group-focus-within:text-primary transition-colors" size={18} />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search forecasts, topics, analysts..."
-                  className="w-full bg-probix-surface border border-probix-border rounded-[20px] py-4 pl-14 pr-4 text-sm font-bold focus:border-primary/50 outline-none transition-all placeholder:text-probix-muted/50 italic shadow-inner"
+                  className="w-full bg-probix-surface border border-probix-border rounded-[14px] py-3 pl-14 pr-4 text-sm font-medium focus:border-primary/50 outline-none transition-all placeholder:text-probix-muted/50 italic"
                 />
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-1.5 opacity-40">
+                    <span className="text-[10px] font-black border border-probix-border rounded px-1.5 py-0.5">⌘</span>
+                    <span className="text-[10px] font-black border border-probix-border rounded px-1.5 py-0.5">K</span>
+                </div>
              </div>
           </div>
 
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-6">
              <ThemeToggle />
-             <div className="relative">
-                <Button variant="ghost" size="icon" className="h-12 w-12 glass !rounded-2xl hover:border-primary/30" onClick={() => setShowNotifications(!showNotifications)}>
-                    <Bell size={22} />
-                    <div className="absolute top-2 right-2 w-2 h-2 bg-crimson rounded-full animate-pulse shadow-glow shadow-crimson/50" />
-                </Button>
-                <AnimatePresence>
-                    {showNotifications && (
-                        <motion.div initial={{ opacity: 0, y: 10, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10, scale: 0.95 }} className="absolute right-0 mt-4 w-80 glass rounded-3xl p-6 border-white/10 shadow-3xl z-[100] text-left">
-                            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] mb-6">Recent Alerts</h3>
-                            <div className="space-y-4 text-left">
-                                <NotificationItem title="Position established" desc="Your Yes trade is verified." icon={<Zap size={14}/>} />
-                                <NotificationItem title="Market shift" desc="Tech Hub shifted +8.4% Bullish." icon={<TrendingUp size={14}/>} />
-                                <NotificationItem title="Account synced" desc="Verified node Lagos Hub active." icon={<Globe size={14}/>} />
-                            </div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+             <div className="relative cursor-pointer hover:opacity-80 transition-opacity" onClick={() => setShowNotifications(!showNotifications)}>
+                <Bell size={20} className="text-probix-muted" />
+                <div className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center text-[9px] font-black text-white shadow-glow border-2 border-probix-bg">3</div>
              </div>
-             <div className="cursor-pointer hover:opacity-80 transition-opacity" onClick={() => setView('profile')}>
-                <img src="https://i.pravatar.cc/150?u=9" className="w-12 h-12 rounded-2xl object-cover border-2 border-primary/20 shadow-lg" alt="Avatar" />
+             <div className="cursor-pointer hover:opacity-80 transition-opacity flex items-center gap-3" onClick={() => setView('profile')}>
+                <img src="https://i.pravatar.cc/150?u=9" className="w-10 h-10 rounded-full object-cover border border-primary/20" alt="Avatar" />
              </div>
-             <Button className="gap-2 !px-8 !py-4 !rounded-[20px] text-sm font-black italic tracking-widest shadow-2xl shadow-primary/30" onClick={() => setIsCreating(true)}>
-                <Plus size={20} />
-                Establish Forecast
+             <Button className="gap-2 !px-6 !py-3 !rounded-[12px] text-xs font-black italic tracking-widest shadow-glow" onClick={() => setIsCreating(true)}>
+                <Plus size={18} />
+                Create Forecast
              </Button>
           </div>
         </header>
 
-        <div className="flex-1 overflow-y-auto p-8 custom-scrollbar relative">
-          <AnimatePresence mode="wait">
+        <div className="flex-1 flex overflow-hidden">
+          <div className="flex-1 overflow-y-auto p-8 custom-scrollbar relative">
+            <AnimatePresence mode="wait">
 
-            {/* VIEW: HOME */}
-            {view === 'home' && !detailedMarket && !activeCategory && (
-              <motion.div key="home" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-12">
+              {/* VIEW: HOME */}
+              {view === 'home' && !detailedMarket && !activeCategory && (
+                <motion.div key="home" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-12 max-w-5xl">
 
-                <div className="relative w-full rounded-[48px] bg-[#020308] border border-white/5 p-12 overflow-hidden shadow-3xl flex flex-col md:flex-row items-center min-h-[500px]">
-                    <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_50%,_rgba(59,130,246,0.06),_transparent_70%)] pointer-events-none" />
+                  <div className="relative w-full rounded-[40px] bg-[#020308] border border-white/5 p-12 overflow-hidden shadow-3xl flex flex-col md:flex-row items-center min-h-[450px]">
+                      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_50%,_rgba(59,130,246,0.06),_transparent_70%)] pointer-events-none" />
 
-                    <div className="relative z-30 flex-[0.7] text-left space-y-10 pl-4">
-                        <h1 className="text-7xl lg:text-8xl font-black italic tracking-tighter leading-[0.85] text-white uppercase">
-                            The future <br /> isn&apos;t guessed. <br /> It&apos;s <span className="text-primary italic drop-shadow-glow text-[#3B82F6]">forecasted.</span>
-                        </h1>
-                        <p className="text-2xl text-probix-muted font-bold italic opacity-80 max-w-sm leading-relaxed">
-                            Join {markets[0]?.volume.split(' ')[0] || "0"} Africans forecasting what matters most.
-                        </p>
-                        <div className="flex items-center gap-8 pt-6">
-                            <Button size="lg" className="!px-12 !rounded-full !py-8 shadow-3xl shadow-primary/50 font-black italic uppercase tracking-[0.2em] text-xl group active:scale-95 transition-all text-white">
-                                Explore trending <ArrowRight className="ml-4 group-hover:translate-x-3 transition-transform w-6 h-6" />
-                            </Button>
-                            <button className="flex items-center gap-4 text-base font-black text-white hover:text-primary transition-all uppercase tracking-widest group/play">
-                                <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover/play:border-primary transition-colors bg-white/5">
-                                    <CirclePlay size={24} className="fill-white/10 group-hover:fill-primary/20 transition-all" />
-                                </div>
-                                How Probix works
-                            </button>
-                        </div>
+                      <div className="relative z-30 flex-[1.2] text-left space-y-8 pl-4">
+                          <h1 className="text-7xl lg:text-8xl font-black italic tracking-tighter leading-[0.85] text-white uppercase">
+                              The future <br /> isn&apos;t guessed. <br /> It&apos;s <span className="text-primary italic drop-shadow-glow text-[#3B82F6]">forecasted.</span>
+                          </h1>
+                          <p className="text-xl text-probix-muted font-bold italic opacity-80 max-w-sm leading-relaxed">
+                              Join 42,831 Africans forecasting what matters most.
+                          </p>
+                          <div className="flex items-center gap-6 pt-4">
+                              <Button size="lg" className="!px-10 !rounded-full !py-6 shadow-3xl shadow-primary/50 font-black italic uppercase tracking-widest text-lg group active:scale-95 transition-all text-white">
+                                  Explore trending <ArrowRight className="ml-3 group-hover:translate-x-2 transition-transform" />
+                              </Button>
+                              <button className="flex items-center gap-3 text-sm font-black text-white hover:text-primary transition-all uppercase tracking-widest group/play">
+                                  <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center group-hover/play:border-primary transition-colors bg-white/5">
+                                      <CirclePlay size={20} className="fill-white/10 group-hover:fill-primary/20 transition-all" />
+                                  </div>
+                                  How Probix works
+                              </button>
+                          </div>
+                      </div>
+
+                      <div className="relative flex-1 h-full min-h-[400px] w-full flex items-center justify-center">
+                          <div className="relative w-[380px] h-[450px]">
+                               <svg viewBox="0 0 100 125" className="w-full h-full drop-shadow-neon transition-all duration-1000 group-hover:scale-105">
+                                  <path d="M48,15 L55,15 L62,20 L70,30 L75,45 L78,60 L75,75 L70,90 L62,105 L50,115 L38,105 L28,90 L22,75 L18,60 L22,45 L28,30 L38,20 Z" fill="url(#neon-grad)" className="opacity-10" />
+                                  <path d="M48,15 L55,15 L62,20 L70,30 L75,45 L78,60 L75,75 L70,90 L62,105 L50,115 L38,105 L28,90 L22,75 L18,60 L22,45 L28,30 L38,20 Z" fill="none" stroke="#3B82F6" strokeWidth="0.5" className="opacity-30" />
+                               </svg>
+                               <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} className="absolute top-[5%] left-[-15%] scale-75 origin-right"><GlassBadge icon={<TrendingUp size={16} className="text-secondary" />} color="border-secondary/50" text="Inflation < 18%" stat="72% Yes" statColor="text-secondary" /></motion.div>
+                               <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute top-[48%] left-[-28%] scale-75 origin-right"><GlassBadge icon={<TrendingUp size={16} className="text-fuchsia" />} color="border-fuchsia/50" text="AFCON 2027 Morocco" stat="65% Yes" statColor="text-fuchsia" /></motion.div>
+                               <PulseNode top="12%" left="48%" color="bg-secondary" />
+                               <PulseNode top="55%" left="32%" color="bg-fuchsia" />
+                               <PulseNode top="42%" right="8%" color="bg-accent" />
+                               <PulseNode bottom="18%" left="55%" color="bg-primary" />
+                          </div>
+                      </div>
+                  </div>
+
+                  <div className="space-y-8">
+                    <div className="flex justify-between items-end px-2 text-left">
+                      <div className="flex items-center gap-4">
+                        <h3 className="text-2xl font-black italic tracking-tighter uppercase leading-none text-white">Trending Now</h3>
+                        <span className="text-xl animate-bounce">🔥</span>
+                      </div>
+                      <button className="text-xs font-black text-primary uppercase tracking-widest flex items-center gap-2 hover:underline">See all <ArrowRight size={14}/></button>
                     </div>
 
-                    <div className="relative flex-1 h-full min-h-[450px] w-full flex items-center justify-center pr-4">
-                        <div className="relative w-[420px] h-[500px]">
-                             <svg viewBox="0 0 100 125" className="w-full h-full drop-shadow-neon transition-all duration-1000 group-hover:scale-105">
-                                <path d="M48,15 L55,15 L62,20 L70,30 L75,45 L78,60 L75,75 L70,90 L62,105 L50,115 L38,105 L28,90 L22,75 L18,60 L22,45 L28,30 L38,20 Z" fill="url(#neon-grad)" className="opacity-10" />
-                                <path d="M48,15 L55,15 L62,20 L70,30 L75,45 L78,60 L75,75 L70,90 L62,105 L50,115 L38,105 L28,90 L22,75 L18,60 L22,45 L28,30 L38,20 Z" fill="none" stroke="#3B82F6" strokeWidth="0.5" className="opacity-30" />
-                             </svg>
-                             <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} className="absolute top-[5%] left-[-15%]"><GlassBadge icon={<TrendingUp size={16} className="text-secondary" />} color="border-secondary/50" text="Inflation < 18%" stat="72% Yes" statColor="text-secondary" /></motion.div>
-                             <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute top-[48%] left-[-28%]"><GlassBadge icon={<TrendingUp size={16} className="text-fuchsia" />} color="border-fuchsia/50" text="AFCON 2027 Morocco" stat="65% Yes" statColor="text-fuchsia" /></motion.div>
-                             <PulseNode top="12%" left="48%" color="bg-secondary" />
-                             <PulseNode top="55%" left="32%" color="bg-fuchsia" />
-                             <PulseNode top="42%" right="8%" color="bg-accent" />
-                             <PulseNode bottom="18%" left="55%" color="bg-primary" />
-                        </div>
-                    </div>
-                </div>
-
-                <div className="flex flex-col xl:flex-row gap-8">
-                    <div className="flex-1 bento-card p-10 flex flex-col bg-probix-surface border-probix-border shadow-xl relative overflow-hidden text-left">
-                        <div className="absolute top-0 right-0 w-48 h-48 bg-primary/5 blur-[80px]" />
-                        <div className="flex justify-between items-center mb-10 px-1 relative z-10">
-                          <h4 className="text-[10px] font-black text-probix-muted uppercase tracking-[0.3em]">Market Dynamics</h4>
-                          <TrendingUp size={16} className="text-secondary opacity-50" />
-                        </div>
-                        <div className="space-y-8 relative z-10">
-                          <MoverItem label="Inflation Momentum" trend="+12.4%" positive />
-                          <MoverItem label="Currency Drift" trend="+8.7%" positive />
-                          <MoverItem label="Regional Stability" trend="-6.1%" />
-                        </div>
-                    </div>
-                    <div className="flex-[2] grid grid-cols-1 md:grid-cols-2 gap-8">
-                         {markets.slice(0, 2).map(m => <MarketCard key={m.id} {...m} onClick={() => setDetailedMarket(m)} onQuickBet={() => setSelectedMarket(m)} />)}
-                    </div>
-                </div>
-
-                <div className="space-y-12">
-                  <div className="flex justify-between items-end mb-12 px-2 text-left">
-                    <div className="flex items-center gap-4"><h3 className="text-3xl font-black italic tracking-tighter uppercase leading-none text-white">Global stream</h3><span className="text-2xl animate-bounce">🔥</span></div>
-                    <div className="flex gap-4">
-                        {['All', 'Politics', 'Economy', 'Sports', 'Tech', 'Crypto'].map(cat => (
+                    <div className="flex gap-3 px-2 overflow-x-auto no-scrollbar pb-2">
+                        {['All', 'Politics', 'Economy', 'Sports', 'Tech', 'Entertainment', 'Crypto', 'Energy'].map(cat => (
                            <button
                              key={cat}
-                             onClick={() => {
-                               if (cat === 'All') {
-                                 setSearchQuery("");
-                               } else {
-                                 setSearchQuery(cat);
-                               }
-                             }}
-                             className={`px-8 py-3 rounded-full text-[11px] font-black uppercase tracking-widest border transition-all ${searchQuery === cat || (cat === 'All' && searchQuery === "") ? 'bg-primary border-primary text-white shadow-glow' : 'bg-probix-surface border-probix-border hover:border-primary/50 text-white'}`}
+                             onClick={() => cat === 'All' ? setSearchQuery("") : setSearchQuery(cat)}
+                             className={`px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest border transition-all shrink-0 ${searchQuery === cat || (cat === 'All' && searchQuery === "") ? 'bg-primary border-primary text-white shadow-glow' : 'bg-probix-surface border-probix-border hover:border-primary/50 text-white'}`}
                            >
                                 {cat}
                            </button>
                         ))}
                     </div>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 px-1">
-                    {filteredMarkets.map((market) => (
-                      <MarketCard key={market.id} {...market} onClick={() => setDetailedMarket(market)} onQuickBet={() => setSelectedMarket(market)} />
-                    ))}
-                  </div>
-                </div>
 
-                {/* LIVE ACTIVITY PULSE */}
-                <div className="market-card p-10 bg-white/[0.01] border border-white/5 rounded-[48px] shadow-2xl">
-                    <div className="flex items-center gap-3 mb-8">
-                        <div className="w-2 h-2 rounded-full bg-secondary animate-pulse shadow-glow shadow-secondary/50" />
-                        <h3 className="text-[10px] font-black tracking-[0.3em] uppercase text-probix-muted italic">Live Node Pulse</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 px-1">
+                      {filteredMarkets.slice(0, 4).map((market) => (
+                        <MarketCard key={market.id} {...market} onClick={() => setDetailedMarket(market)} onQuickBet={() => setSelectedMarket(market)} />
+                      ))}
                     </div>
-                    <div className="space-y-4">
-                        {recentActivity.map(activity => (
-                           <ActivityItem
-                             key={activity.id}
-                             user={activity.user}
-                             action={activity.action}
-                             market={activity.market}
-                             amount={activity.amount}
-                             type={activity.type}
-                           />
-                        ))}
-                    </div>
-                </div>
-              </motion.div>
-            )}
+                  </div>
+
+                  {/* BOTTOM REPUTATION SECTION FROM IMAGE */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white/5 rounded-[32px] p-8 border border-white/5">
+                      <div className="flex flex-col items-center gap-3 text-center border-r border-white/5">
+                          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary"><Zap size={20}/></div>
+                          <p className="text-[10px] font-black uppercase tracking-widest text-white leading-tight">Real People<br/><span className="opacity-40">Real Opinions</span></p>
+                      </div>
+                      <div className="flex flex-col items-center gap-3 text-center border-r border-white/5">
+                          <div className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary"><CheckCircle2 size={20}/></div>
+                          <p className="text-[10px] font-black uppercase tracking-widest text-white leading-tight">Reputation-Based<br/><span className="opacity-40">Forecasting</span></p>
+                      </div>
+                      <div className="flex flex-col items-center gap-3 text-center border-r border-white/5">
+                          <div className="w-10 h-10 rounded-xl bg-fuchsia/10 flex items-center justify-center text-fuchsia"><Zap size={20}/></div>
+                          <p className="text-[10px] font-black uppercase tracking-widest text-white leading-tight">AI-Powered<br/><span className="opacity-40">Insights</span></p>
+                      </div>
+                      <div className="flex flex-col items-center gap-3 text-center">
+                          <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center text-accent"><Globe size={20}/></div>
+                          <p className="text-[10px] font-black uppercase tracking-widest text-white leading-tight">African-Centric<br/><span className="opacity-40">Intelligence</span></p>
+                      </div>
+                  </div>
+                </motion.div>
+              )}
+
+            </AnimatePresence>
+            <div className="h-64" />
+          </div>
+
+          {/* RIGHT SIDEBAR WIDGETS FROM IMAGE */}
+          <aside className="w-80 border-l border-probix-border p-6 flex flex-col gap-8 overflow-y-auto no-scrollbar bg-probix-bg/50 shrink-0 hidden xl:flex">
+              <div className="space-y-6">
+                  <div className="flex justify-between items-center px-1">
+                      <h3 className="text-xs font-black uppercase tracking-[0.2em] text-white">Biggest Movers</h3>
+                      <span className="text-[9px] font-black text-probix-muted uppercase border border-probix-border px-1.5 py-0.5 rounded">24h</span>
+                  </div>
+                  <div className="space-y-4">
+                      <MoverItem label="Fuel price decrease" trend="+12.4%" positive />
+                      <MoverItem label="USD will rise above" trend="-8.7%" />
+                      <MoverItem label="Blackouts reduce" trend="+6.1%" positive />
+                      <MoverItem label="Bitcoin above $120k" trend="+5.3%" positive />
+                  </div>
+              </div>
+
+              <div className="space-y-6">
+                  <div className="flex justify-between items-center px-1">
+                      <h3 className="text-xs font-black uppercase tracking-[0.2em] text-white">Top Analysts</h3>
+                      <button className="text-[9px] font-black text-primary uppercase tracking-widest hover:underline">View all</button>
+                  </div>
+                  <div className="space-y-4">
+                      {ANALYSTS.map(a => (
+                          <div key={a.id} className="flex items-center justify-between group cursor-pointer">
+                              <div className="flex items-center gap-3">
+                                  <img src={a.image} className="w-8 h-8 rounded-full object-cover" />
+                                  <div className="text-left">
+                                      <p className="text-[10px] font-black uppercase text-white leading-none mb-1">{a.name}</p>
+                                      <p className="text-[9px] font-bold text-secondary uppercase italic opacity-60">{a.accuracy}% Accuracy</p>
+                                  </div>
+                              </div>
+                              <button className="bg-primary text-white text-[9px] font-black uppercase px-3 py-1.5 rounded-lg shadow-glow">Follow</button>
+                          </div>
+                      ))}
+                  </div>
+              </div>
+
+              <div className="bg-[#0A0C12] border border-white/5 rounded-3xl p-6 space-y-4 relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 blur-2xl -z-0" />
+                  <div className="flex justify-between items-center relative z-10">
+                      <h3 className="text-xs font-black uppercase tracking-[0.2em] text-white">Probix Insights</h3>
+                      <div className="bg-primary/20 text-primary text-[8px] font-black px-1.5 py-0.5 rounded uppercase">AI</div>
+                  </div>
+                  <div className="space-y-4 relative z-10">
+                      <div className="h-20 w-full bg-white/[0.02] rounded-xl overflow-hidden">
+                          <MarketChart data={[30, 45, 40, 60, 55, 70, 65]} color="#3B82F6" />
+                      </div>
+                      <div className="text-left">
+                          <p className="text-[10px] font-bold text-probix-muted uppercase tracking-widest leading-none mb-2 italic">Overall market confidence is</p>
+                          <p className="text-xl font-black italic text-white uppercase tracking-tighter mb-4">Bullish <span className="text-primary">(62% avg)</span></p>
+                          <p className="text-[9px] font-medium text-probix-muted leading-relaxed mb-6 opacity-60">Top driver: Inflation report, FX policy, Oil prices drop</p>
+                          <button className="text-[9px] font-black text-primary uppercase tracking-widest flex items-center gap-2 group/link">Read full report <ArrowRight size={10} className="group-hover/link:translate-x-1 transition-transform"/></button>
+                      </div>
+                  </div>
+              </div>
+
+              <div className="space-y-4">
+                  <h3 className="text-xs font-black uppercase tracking-[0.2em] text-white px-1">Featured Analyst</h3>
+                  <div className="bg-white/5 border border-white/5 rounded-3xl p-4 flex items-center gap-4 group cursor-pointer hover:border-primary/30 transition-all">
+                      <img src="https://i.pravatar.cc/150?u=12" className="w-10 h-10 rounded-xl object-cover" />
+                      <div className="flex-1 text-left min-w-0">
+                          <p className="text-[10px] font-black uppercase text-white truncate">The Macro Sage <CheckCircle2 className="inline text-primary" size={10}/></p>
+                          <p className="text-[9px] font-bold text-secondary uppercase tracking-widest italic leading-none mt-1">91% Accuracy</p>
+                      </div>
+                      <ChevronRight size={14} className="text-probix-muted" />
+                  </div>
+              </div>
+          </aside>
+        </div>
+      </main>
 
             {/* VIEW: CATEGORY */}
             {view === 'category' && activeCategory && !detailedMarket && (
