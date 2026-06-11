@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand Palette - Elite Pro */
+  --color-primary: #3B82F6;
+  --color-primary-glow: rgba(59, 130, 246, 0.5);
+  --color-secondary: #10B981;
+  --color-fuchsia: #D946EF;
+  --color-accent: #F59E0B;
+  --color-crimson: #EF4444;
+
+  /* Theme-aware Backgrounds */
+  --color-probix-bg: var(--probix-bg);
+  --color-probix-surface: var(--probix-surface);
+  --color-probix-border: var(--probix-border);
+  --color-probix-text: var(--probix-text);
+  --color-probix-muted: var(--probix-muted);
+}
+
+:root {
+  --probix-bg: #FFFFFF;
+  --probix-surface: #F9FAFB;
+  --probix-border: rgba(0, 0, 0, 0.05);
+  --probix-text: #111827;
+  --probix-muted: #6B7280;
+  font-size: 13px;
+}
+
+[data-theme='dark'] {
+  --probix-bg: #010206;
+  --probix-surface: #0A0A0C;
+  --probix-border: rgba(255, 255, 255, 0.05);
+  --probix-text: #F9FAFB;
+  --probix-muted: #9CA3AF;
+}
+
+body {
+  background-color: var(--probix-bg);
+  color: var(--probix-text);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Elite Utilities */
+@utility glass {
+  @apply bg-white/5 dark:bg-black/40 backdrop-blur-2xl border border-white/10 dark:border-white/5;
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+}
+
+@utility bento-card {
+  @apply bg-probix-surface border border-probix-border rounded-[32px] p-6 transition-all duration-300 hover:shadow-2xl;
+}
+
+@utility shadow-glow {
+  box-shadow: 0 0 20px var(--color-primary-glow);
+}
+
+@utility drop-shadow-glow {
+  filter: drop-shadow(0 0 10px var(--color-primary-glow));
+}
+
+@utility drop-shadow-neon {
+  filter: drop-shadow(0 0 5px #3B82F6) drop-shadow(0 0 15px #3B82F6);
+}
+
+/* 3D Parallax Helpers */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--probix-border);
+  border-radius: 10px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
