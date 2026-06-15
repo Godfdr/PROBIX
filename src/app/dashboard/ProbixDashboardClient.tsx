@@ -245,7 +245,7 @@ export default function ProbixDashboardClient() {
                                         <TrendingUp size={18} />
                                     </div>
                                     <div className="flex-1 space-y-1">
-                                        <p className="text-sm font-black italic uppercase text-white group-hover:text-primary transition-colors">Market Shift Detected</p>
+                                        <p className="text-sm font-black italic uppercase text-probix-text dark:text-white group-hover:text-primary transition-colors">Market Shift Detected</p>
                                         <p className="text-[11px] font-bold text-probix-muted leading-tight opacity-70">Naira-USD Terminal node has shifted +12.4% Bullish in the last cycle.</p>
                                         <p className="text-[9px] font-black text-probix-muted uppercase opacity-40">2 mins ago</p>
                                     </div>
@@ -255,7 +255,7 @@ export default function ProbixDashboardClient() {
                                         <CheckCircle2 size={18} />
                                     </div>
                                     <div className="flex-1 space-y-1">
-                                        <p className="text-sm font-black italic uppercase text-white group-hover:text-primary transition-colors">Position Verified</p>
+                                        <p className="text-sm font-black italic uppercase text-probix-text dark:text-white group-hover:text-primary transition-colors">Position Verified</p>
                                         <p className="text-[11px] font-bold text-probix-muted leading-tight opacity-70">Your YES position on #NGR-INF-27 has been established on Base.</p>
                                         <p className="text-[9px] font-black text-probix-muted uppercase opacity-40">15 mins ago</p>
                                     </div>
@@ -265,7 +265,7 @@ export default function ProbixDashboardClient() {
                                         <Zap size={18} />
                                     </div>
                                     <div className="flex-1 space-y-1">
-                                        <p className="text-sm font-black italic uppercase text-white group-hover:text-primary transition-colors">Liquidity Match</p>
+                                        <p className="text-sm font-black italic uppercase text-probix-text dark:text-white group-hover:text-primary transition-colors">Liquidity Match</p>
                                         <p className="text-[11px] font-bold text-probix-muted leading-tight opacity-70">Lagos Oracle Hub 4 has verified new analytical clusters for session 2.4.</p>
                                         <p className="text-[9px] font-black text-probix-muted uppercase opacity-40">1 hour ago</p>
                                     </div>
@@ -853,7 +853,7 @@ export default function ProbixDashboardClient() {
           <aside className="w-80 border-l border-probix-border p-6 flex flex-col gap-8 overflow-y-auto no-scrollbar bg-probix-bg/50 shrink-0 hidden xl:flex">
               <div className="space-y-6">
                   <div className="flex justify-between items-center px-1">
-                      <h3 className="text-xs font-black uppercase tracking-[0.2em] text-white">Biggest Movers</h3>
+                      <h3 className="text-xs font-black uppercase tracking-[0.2em] text-probix-text dark:text-white">Biggest Movers</h3>
                       <span className="text-[9px] font-black text-probix-muted uppercase border border-probix-border px-1.5 py-0.5 rounded">24h</span>
                   </div>
                   <div className="space-y-4">
@@ -866,7 +866,7 @@ export default function ProbixDashboardClient() {
 
               <div className="space-y-6">
                   <div className="flex justify-between items-center px-1">
-                      <h3 className="text-xs font-black uppercase tracking-[0.2em] text-white">Top Analysts</h3>
+                      <h3 className="text-xs font-black uppercase tracking-[0.2em] text-probix-text dark:text-white">Top Analysts</h3>
                       <button className="text-[9px] font-black text-primary uppercase tracking-widest hover:underline">View all</button>
                   </div>
                   <div className="space-y-4">
@@ -875,7 +875,7 @@ export default function ProbixDashboardClient() {
                               <div className="flex items-center gap-3">
                                   <img src={a.image} className="w-8 h-8 rounded-full object-cover" alt={a.name} />
                                   <div className="text-left">
-                                      <p className="text-[10px] font-black uppercase text-white leading-none mb-1">{a.name}</p>
+                                      <p className="text-[10px] font-black uppercase text-probix-text dark:text-white leading-none mb-1">{a.name}</p>
                                       <p className="text-[9px] font-bold text-secondary uppercase italic opacity-60">{a.accuracy}% Accuracy</p>
                                   </div>
                               </div>
@@ -885,19 +885,19 @@ export default function ProbixDashboardClient() {
                   </div>
               </div>
 
-              <div className="bg-[#0A0C12] border border-white/5 rounded-3xl p-6 space-y-4 relative overflow-hidden group">
+              <div className="bg-probix-surface dark:bg-[#0A0C12] border border-probix-border dark:border-white/5 rounded-3xl p-6 space-y-4 relative overflow-hidden group">
                   <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 blur-2xl -z-0" />
                   <div className="flex justify-between items-center relative z-10">
-                      <h3 className="text-xs font-black uppercase tracking-[0.2em] text-white">Probix Insights</h3>
+                      <h3 className="text-xs font-black uppercase tracking-[0.2em] text-probix-text dark:text-white">Probix Insights</h3>
                       <div className="bg-primary/20 text-primary text-[8px] font-black px-1.5 py-0.5 rounded uppercase">AI</div>
                   </div>
                   <div className="space-y-4 relative z-10">
-                      <div className="h-20 w-full bg-white/[0.02] rounded-xl overflow-hidden">
+                      <div className="h-20 w-full bg-probix-bg/50 dark:bg-white/[0.02] rounded-xl overflow-hidden">
                           <MarketChart data={[30, 45, 40, 60, 55, 70, 65]} color="#3B82F6" />
                       </div>
                       <div className="text-left">
                           <p className="text-[10px] font-bold text-probix-muted uppercase tracking-widest leading-none mb-2 italic">Overall market confidence is</p>
-                          <p className="text-xl font-black italic text-white uppercase tracking-tighter mb-4">Bullish <span className="text-primary">(62% avg)</span></p>
+                          <p className="text-xl font-black italic text-probix-text dark:text-white uppercase tracking-tighter mb-4">Bullish <span className="text-primary">(62% avg)</span></p>
                           <p className="text-[9px] font-medium text-probix-muted leading-relaxed mb-6 opacity-60">Top driver: Inflation report, FX policy, Oil prices drop</p>
                           <button className="text-[9px] font-black text-primary uppercase tracking-widest flex items-center gap-2 group/link">Read full report <ArrowRight size={10} className="group-hover/link:translate-x-1 transition-transform"/></button>
                       </div>
@@ -905,11 +905,11 @@ export default function ProbixDashboardClient() {
               </div>
 
               <div className="space-y-4">
-                  <h3 className="text-xs font-black uppercase tracking-[0.2em] text-white px-1">Featured Analyst</h3>
-                  <div className="bg-white/5 border border-white/5 rounded-3xl p-4 flex items-center gap-4 group cursor-pointer hover:border-primary/30 transition-all">
+                  <h3 className="text-xs font-black uppercase tracking-[0.2em] text-probix-text dark:text-white px-1">Featured Analyst</h3>
+                  <div className="bg-probix-surface dark:bg-white/5 border border-probix-border dark:border-white/5 rounded-3xl p-4 flex items-center gap-4 group cursor-pointer hover:border-primary/30 transition-all">
                       <img src="https://i.pravatar.cc/150?u=12" className="w-10 h-10 rounded-xl object-cover" alt="The Macro Sage" />
                       <div className="flex-1 text-left min-w-0">
-                          <p className="text-[10px] font-black uppercase text-white truncate">The Macro Sage <CheckCircle2 className="inline text-primary" size={10}/></p>
+                          <p className="text-[10px] font-black uppercase text-probix-text dark:text-white truncate">The Macro Sage <CheckCircle2 className="inline text-primary" size={10}/></p>
                           <p className="text-[9px] font-bold text-secondary uppercase tracking-widest italic leading-none mt-1">91% Accuracy</p>
                       </div>
                       <ChevronRight size={14} className="text-probix-muted" />
