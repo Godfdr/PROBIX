@@ -70,7 +70,7 @@ export function Sidebar({
   };
 
   return (
-    <aside className="w-64 border-r border-probix-border flex flex-col p-4 gap-6 bg-[#010206] shrink-0 z-50 overflow-y-auto no-scrollbar">
+    <aside className="w-64 border-r border-probix-border flex flex-col p-4 gap-6 bg-probix-surface dark:bg-[#010206] shrink-0 z-50 overflow-y-auto no-scrollbar">
       <div className="flex items-center gap-3 px-2 mb-2 cursor-pointer group" onClick={() => { setView('home'); resetAll(); }}>
         <ProbixLogo size="sm" />
         <span className="font-black text-xl tracking-tighter italic">Probix</span>

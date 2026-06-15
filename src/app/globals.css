@@ -20,9 +20,11 @@
 :root {
   --probix-bg: #FFFFFF;
   --probix-surface: #F9FAFB;
-  --probix-border: rgba(0, 0, 0, 0.05);
-  --probix-text: #111827;
-  --probix-muted: #6B7280;
+  --probix-border: rgba(0, 0, 0, 0.08);
+  --probix-text: #0F172A;
+  --probix-muted: #64748B;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.05);
   font-size: 13px;
 }
 
@@ -31,7 +33,9 @@
   --probix-surface: #0A0A0C;
   --probix-border: rgba(255, 255, 255, 0.05);
   --probix-text: #F9FAFB;
-  --probix-muted: #9CA3AF;
+  --probix-muted: #94A3B8;
+  --glass-bg: rgba(0, 0, 0, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.05);
 }
 
 body {
@@ -39,12 +43,14 @@ body {
   color: var(--probix-text);
   font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Elite Utilities */
 @utility glass {
-  @apply bg-white/5 dark:bg-black/40 backdrop-blur-2xl border border-white/10 dark:border-white/5;
+  background-color: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
 }
 
 @keyframes scroll {

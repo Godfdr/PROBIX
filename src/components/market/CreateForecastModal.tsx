@@ -69,22 +69,22 @@ export function CreateForecastModal({ onClose, onCreate }: CreateForecastModalPr
         exit={{ opacity: 0, scale: 0.9, y: 50 }}
         className="fixed inset-0 flex items-center justify-center pointer-events-none z-[2010] p-6"
       >
-         <div className="max-w-4xl w-full glass rounded-[72px] p-16 border-white/10 shadow-[0_0_150px_rgba(139,92,246,0.3)] pointer-events-auto flex flex-col gap-10 overflow-y-auto max-h-[90vh] no-scrollbar relative bg-[#010206]">
+         <div className="max-w-4xl w-full glass rounded-[72px] p-16 shadow-[0_0_150px_rgba(139,92,246,0.3)] pointer-events-auto flex flex-col gap-10 overflow-y-auto max-h-[90vh] no-scrollbar relative bg-probix-bg dark:bg-[#010206]">
             {isLaunching && (
-                <div className="absolute inset-0 bg-[#010206]/98 backdrop-blur-3xl z-50 flex flex-col items-center justify-center gap-10">
+                <div className="absolute inset-0 bg-probix-bg/98 dark:bg-[#010206]/98 backdrop-blur-3xl z-50 flex flex-col items-center justify-center gap-10">
                     <motion.div animate={{ rotate: 360, scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 2, ease: "linear" }}>
                         <Zap size={120} className="text-primary fill-primary shadow-glow shadow-primary/50"/>
                     </motion.div>
-                    <p className="font-black italic text-5xl tracking-widest uppercase text-white animate-pulse">Establishing Node...</p>
+                    <p className="font-black italic text-5xl tracking-widest uppercase text-probix-text animate-pulse">Establishing Node...</p>
                 </div>
             )}
 
             <div className="flex justify-between items-center">
               <div className="space-y-2">
-                <h2 className="text-6xl font-black italic tracking-tighter uppercase leading-none text-white">Initialize Forecast</h2>
+                <h2 className="text-6xl font-black italic tracking-tighter uppercase leading-none text-probix-text">Initialize Forecast</h2>
                 <p className="text-[10px] font-black text-probix-muted uppercase tracking-[0.5em] italic">Protocol 2.4 / Node Establishment</p>
               </div>
-              <Button variant="ghost" size="icon" onClick={onClose} className="glass h-16 w-16 !rounded-[28px] hover:border-primary/50 shadow-3xl text-white">
+              <Button variant="ghost" size="icon" onClick={onClose} className="glass h-16 w-16 !rounded-[28px] hover:border-primary/50 shadow-3xl text-probix-text">
                 <X size={36}/>
               </Button>
             </div>
@@ -97,7 +97,7 @@ export function CreateForecastModal({ onClose, onCreate }: CreateForecastModalPr
                       value={formData.title}
                       onChange={e => setFormData({...formData, title: e.target.value})}
                       placeholder="e.g. Will Enyimba win the NPFL 2026 Title?"
-                      className="w-full bg-[#0A0C12] border border-white/5 rounded-[32px] py-8 px-10 outline-none focus:border-primary/50 transition-all font-black italic text-2xl placeholder:opacity-10 shadow-inner text-white h-48 resize-none"
+                      className="w-full bg-probix-surface dark:bg-[#0A0C12] border border-probix-border dark:border-white/5 rounded-[32px] py-8 px-10 outline-none focus:border-primary/50 transition-all font-black italic text-2xl placeholder:opacity-10 shadow-inner text-probix-text h-48 resize-none"
                     />
                   </div>
 
@@ -107,7 +107,7 @@ export function CreateForecastModal({ onClose, onCreate }: CreateForecastModalPr
                       value={formData.description}
                       onChange={e => setFormData({...formData, description: e.target.value})}
                       placeholder="Verified data source and settlement criteria..."
-                      className="w-full bg-[#0A0C12] border border-white/5 rounded-[32px] py-8 px-10 outline-none focus:border-primary/50 transition-all font-bold italic text-lg placeholder:opacity-10 shadow-inner text-probix-muted h-32 resize-none"
+                      className="w-full bg-probix-surface dark:bg-[#0A0C12] border border-probix-border dark:border-white/5 rounded-[32px] py-8 px-10 outline-none focus:border-primary/50 transition-all font-bold italic text-lg placeholder:opacity-10 shadow-inner text-probix-muted h-32 resize-none"
                     />
                   </div>
                </div>
@@ -120,10 +120,10 @@ export function CreateForecastModal({ onClose, onCreate }: CreateForecastModalPr
                          <button
                            key={cat.name}
                            onClick={() => setFormData({...formData, category: cat.name, icon: cat.icon, color: cat.color})}
-                           className={`p-6 rounded-[28px] flex flex-col items-center justify-center gap-3 transition-all border-2 ${formData.category === cat.name ? 'bg-primary/10 border-primary shadow-glow shadow-primary/20' : 'bg-white/5 border-transparent opacity-40 hover:opacity-100'}`}
+                           className={`p-6 rounded-[28px] flex flex-col items-center justify-center gap-3 transition-all border-2 ${formData.category === cat.name ? 'bg-primary/10 border-primary shadow-glow shadow-primary/20' : 'bg-probix-surface dark:bg-white/5 border-transparent opacity-40 hover:opacity-100'}`}
                          >
                             <span className="text-4xl">{cat.icon}</span>
-                            <span className="text-[10px] font-black uppercase tracking-widest text-white">{cat.name}</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-probix-text">{cat.name}</span>
                          </button>
                        ))}
                     </div>
@@ -131,7 +131,7 @@ export function CreateForecastModal({ onClose, onCreate }: CreateForecastModalPr
 
                   <div className="bento-card bg-primary/5 border-primary/20 p-8 flex flex-col gap-6">
                      <div className="flex justify-between items-center">
-                        <p className="text-[11px] font-black text-white/50 uppercase tracking-[0.2em] italic leading-none">Initial Probability</p>
+                        <p className="text-[11px] font-black text-primary/50 dark:text-white/50 uppercase tracking-[0.2em] italic leading-none">Initial Probability</p>
                         <span className="text-4xl font-black italic text-primary leading-none">{formData.percentage}%</span>
                      </div>
                      <input
@@ -140,9 +140,9 @@ export function CreateForecastModal({ onClose, onCreate }: CreateForecastModalPr
                         max="99"
                         value={formData.percentage}
                         onChange={e => setFormData({...formData, percentage: parseInt(e.target.value)})}
-                        className="w-full accent-primary h-1.5 bg-white/10 rounded-full appearance-none cursor-pointer"
+                        className="w-full accent-primary h-1.5 bg-probix-border dark:bg-white/10 rounded-full appearance-none cursor-pointer"
                      />
-                     <div className="flex justify-between text-[9px] font-black text-white/20 uppercase tracking-widest">
+                     <div className="flex justify-between text-[9px] font-black text-probix-muted dark:text-white/20 uppercase tracking-widest">
                         <span>Highly Unlikely</span>
                         <span>Highly Likely</span>
                      </div>

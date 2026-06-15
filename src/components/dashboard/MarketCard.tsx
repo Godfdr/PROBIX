@@ -29,33 +29,33 @@ export function MarketCard({
   return (
     <motion.div
       whileHover={{ y: -8, scale: 1.01 }}
-      className="glass group cursor-pointer hover:border-white/20 relative overflow-hidden h-[450px] flex flex-col p-8 transition-all duration-500 shadow-2xl bg-[#0A0C12]/40 rounded-[32px] border-white/5 text-left"
+      className="glass group cursor-pointer hover:border-white/20 relative overflow-hidden h-[420px] flex flex-col p-6 transition-all duration-500 shadow-2xl bg-probix-surface dark:bg-[#0A0C12]/40 rounded-[28px] border-white/5 text-left"
     >
-      <div className="flex justify-between items-start mb-8 relative z-10">
-         <div className="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-xl border border-white/5">
-            <span className="text-xl grayscale group-hover:grayscale-0 transition-all">{icon}</span>
-            <span className="text-[10px] font-black uppercase tracking-widest text-probix-muted group-hover:text-white transition-colors">{category}</span>
+      <div className="flex justify-between items-start mb-6 relative z-10">
+         <div className="flex items-center gap-2.5 bg-probix-bg dark:bg-white/5 px-3 py-1.5 rounded-lg border border-probix-border dark:border-white/5">
+            <span className="text-lg grayscale group-hover:grayscale-0 transition-all">{icon}</span>
+            <span className="text-[9px] font-black uppercase tracking-widest text-probix-muted group-hover:text-probix-text dark:group-hover:text-white transition-colors">{category}</span>
          </div>
-         <button className="text-probix-muted hover:text-white transition-colors p-1"><MoreVertical size={18} /></button>
+         <button className="text-probix-muted hover:text-probix-text dark:hover:text-white transition-colors p-1"><MoreVertical size={16} /></button>
       </div>
 
       <div onClick={onClick} className="flex-1 relative z-10 flex flex-col">
-         <h4 className="text-2xl font-black italic leading-[1.1] mb-6 line-clamp-3 group-hover:text-primary transition-colors tracking-tighter uppercase text-white min-h-[4.5rem]">
+         <h4 className="text-xl font-black italic leading-[1.1] mb-4 line-clamp-3 group-hover:text-primary transition-colors tracking-tighter uppercase text-probix-text dark:text-white min-h-[3.3rem]">
            {title}
          </h4>
 
-         <div className="flex items-center gap-3 mb-2">
-            <p className="text-6xl font-black italic tracking-tighter leading-none" style={{ color }}>{percentage}%</p>
-            <span className="text-xs font-black uppercase text-probix-muted tracking-widest pb-1 italic opacity-60">YES</span>
+         <div className="flex items-center gap-2.5 mb-1">
+            <p className="text-5xl font-black italic tracking-tighter leading-none" style={{ color }}>{percentage}%</p>
+            <span className="text-[10px] font-black uppercase text-probix-muted tracking-widest pb-0.5 italic opacity-60">YES</span>
          </div>
 
-         <div className={`flex items-center gap-2 font-black text-[10px] uppercase italic tracking-widest leading-none ${trend.includes('+') ? 'text-secondary' : 'text-crimson'}`}>
-            <TrendingUp size={14} className={trend.includes('+') ? '' : 'rotate-180'} />
+         <div className={`flex items-center gap-1.5 font-black text-[9px] uppercase italic tracking-widest leading-none ${trend.includes('+') ? 'text-secondary' : 'text-crimson'}`}>
+            <TrendingUp size={12} className={trend.includes('+') ? '' : 'rotate-180'} />
             {trend}
          </div>
       </div>
 
-      <div className="h-24 w-full relative mb-6">
+      <div className="h-20 w-full relative mb-4">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data}>
             <defs>

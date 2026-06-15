@@ -83,12 +83,12 @@ interface MoverItemProps {
 
 export function MoverItem({ label, trend, positive }: MoverItemProps) {
 return (
-  <div className="flex items-center justify-between group cursor-pointer transition-all hover:translate-x-2 p-3 rounded-2xl hover:bg-white/[0.02] text-left">
+  <div className="flex items-center justify-between group cursor-pointer transition-all hover:translate-x-2 p-3 rounded-2xl hover:bg-probix-surface dark:hover:bg-white/[0.02] text-left">
      <div className="flex items-center gap-6 text-left">
         <div className={`w-14 h-14 rounded-[20px] flex items-center justify-center shadow-xl ${positive ? 'bg-secondary/10 border border-secondary/20' : 'bg-crimson/10 border border-crimson/20'}`}>
           <TrendingUp size={24} className={positive ? 'text-secondary shadow-glow shadow-secondary/20' : 'text-crimson rotate-180'} />
         </div>
-        <span className="text-lg font-black italic tracking-tight text-probix-text/80 group-hover:text-probix-text transition-colors uppercase leading-none text-white">{label}</span>
+        <span className="text-lg font-black italic tracking-tight text-probix-text group-hover:text-primary transition-colors uppercase leading-none">{label}</span>
      </div>
      <div className="text-right">
           <span className={`text-base font-black ${positive ? 'text-secondary shadow-glow shadow-secondary/10' : 'text-crimson'} italic leading-none`}>{trend}</span>

@@ -61,7 +61,7 @@ export const TradingDrawer = ({ market, onClose }: { market: Market | null; onCl
         animate={{ x: 0 }}
         exit={{ x: '100%' }}
         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-        className="fixed right-0 top-0 h-full w-full max-w-md bg-probix-900 border-l border-white/10 z-[210] p-8 flex flex-col shadow-2xl"
+        className="fixed right-0 top-0 h-full w-full max-w-md bg-probix-bg dark:bg-[#010206] border-l border-probix-border dark:border-white/10 z-[210] p-8 flex flex-col shadow-2xl"
       >
         <div className="flex justify-between items-center mb-10">
           <div className="flex items-center gap-3">
@@ -70,28 +70,28 @@ export const TradingDrawer = ({ market, onClose }: { market: Market | null; onCl
             </span>
             <div className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
           </div>
-          <Button variant="ghost" size="icon" onClick={onClose} className="w-10 h-10">
+          <Button variant="ghost" size="icon" onClick={onClose} className="w-10 h-10 text-probix-text dark:text-white">
             <X size={20} />
           </Button>
         </div>
 
-        <h2 className="text-3xl font-black italic tracking-tighter leading-[1.1] mb-10">
+        <h2 className="text-3xl font-black italic tracking-tighter leading-[1.1] mb-10 text-probix-text dark:text-white">
           {market.title}
         </h2>
 
-        <div className="bg-probix-800 rounded-[32px] p-7 border border-white/5 mb-8 shadow-inner">
+        <div className="bg-probix-surface dark:bg-[#0A0C12] rounded-[32px] p-7 border border-probix-border dark:border-white/5 mb-8 shadow-inner">
           <div className="mb-8">
             <p className="text-[10px] font-black text-probix-muted uppercase tracking-[0.4em] mb-4 italic">Order Depth</p>
             <OrderBook />
           </div>
 
           <div className="flex justify-between items-center mb-8">
-            <span className="text-sm font-bold text-text-400">Winning Outcome</span>
-            <div className="flex p-1 bg-probix-900 rounded-2xl border border-white/5">
+            <span className="text-sm font-bold text-probix-muted dark:text-text-400">Winning Outcome</span>
+            <div className="flex p-1 bg-probix-bg dark:bg-[#010206] rounded-2xl border border-probix-border dark:border-white/5">
               <button
                 onClick={() => setSide('yes')}
                 className={`px-6 py-2 rounded-xl text-xs font-black transition-all ${
-                  side === 'yes' ? "bg-secondary text-black shadow-lg" : "text-text-600"
+                  side === 'yes' ? "bg-secondary text-black shadow-lg" : "text-probix-muted dark:text-text-600"
                 }`}
               >
                 YES
@@ -99,7 +99,7 @@ export const TradingDrawer = ({ market, onClose }: { market: Market | null; onCl
               <button
                 onClick={() => setSide('no')}
                 className={`px-6 py-2 rounded-xl text-xs font-black transition-all ${
-                  side === 'no' ? "bg-crimson text-white shadow-lg" : "text-text-600"
+                  side === 'no' ? "bg-crimson text-white shadow-lg" : "text-probix-muted dark:text-text-600"
                 }`}
               >
                 NO
@@ -109,8 +109,8 @@ export const TradingDrawer = ({ market, onClose }: { market: Market | null; onCl
 
           <div className="space-y-4">
             <div className="flex justify-between items-end">
-              <span className="text-xs font-black text-text-600 uppercase tracking-widest">Amount to trade</span>
-              <span className="text-xs font-bold text-text-400">Bal: ₦{balance.toLocaleString()}</span>
+              <span className="text-xs font-black text-probix-muted dark:text-text-600 uppercase tracking-widest">Amount to trade</span>
+              <span className="text-xs font-bold text-probix-muted dark:text-text-400">Bal: ₦{balance.toLocaleString()}</span>
             </div>
             <div className="relative group">
               <input
@@ -118,19 +118,19 @@ export const TradingDrawer = ({ market, onClose }: { market: Market | null; onCl
                 placeholder="0.00"
                 value={tradeAmount}
                 onChange={(e) => setAmount(e.target.value)}
-                className="w-full bg-probix-950 border border-white/10 rounded-2xl py-7 px-8 text-4xl font-black focus:border-primary/50 outline-none transition-all placeholder:text-text-600 group-hover:border-white/20"
+                className="w-full bg-probix-bg dark:bg-[#0A0C12] border border-probix-border dark:border-white/10 rounded-2xl py-7 px-8 text-4xl font-black focus:border-primary/50 outline-none transition-all placeholder:text-probix-muted dark:placeholder:text-text-600 group-hover:border-primary/30 text-probix-text dark:text-white"
               />
-              <span className="absolute right-8 top-1/2 -translate-y-1/2 text-text-400 font-black text-2xl italic tracking-tighter">NGN</span>
+              <span className="absolute right-8 top-1/2 -translate-y-1/2 text-probix-muted dark:text-text-400 font-black text-2xl italic tracking-tighter">NGN</span>
             </div>
           </div>
 
-          <div className="mt-10 space-y-4 pt-6 border-t border-white/5">
+          <div className="mt-10 space-y-4 pt-6 border-t border-probix-border dark:border-white/5">
             <div className="flex justify-between items-center">
-              <span className="text-sm text-text-600 font-bold uppercase tracking-tight">Potential Payout</span>
+              <span className="text-sm text-probix-muted dark:text-text-600 font-bold uppercase tracking-tight">Potential Payout</span>
               <span className="text-xl font-black text-secondary italic">₦{potentialPayout}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-sm text-text-600 font-bold uppercase tracking-tight">Estimated ROI</span>
+              <span className="text-sm text-probix-muted dark:text-text-600 font-bold uppercase tracking-tight">Estimated ROI</span>
               <span className="text-xl font-black text-primary italic">+{roi}%</span>
             </div>
           </div>
@@ -139,7 +139,7 @@ export const TradingDrawer = ({ market, onClose }: { market: Market | null; onCl
         <Button
           disabled={!tradeAmount || isExecuting || parseFloat(tradeAmount) > balance}
           size="lg"
-          className="w-full !py-6 text-xl font-black italic tracking-[0.1em] disabled:opacity-50 disabled:grayscale transition-all mb-6 uppercase shadow-3xl shadow-primary/30"
+          className="w-full !py-6 text-xl font-black italic tracking-[0.1em] disabled:opacity-50 disabled:grayscale transition-all mb-6 uppercase shadow-3xl shadow-primary/30 text-white"
           onClick={handleExecute}
         >
           {isExecuting ? "ESTABLISHING NODE..." : "EXECUTE TRADE"}
@@ -152,11 +152,11 @@ export const TradingDrawer = ({ market, onClose }: { market: Market | null; onCl
         )}
 
         <div className="mt-auto flex flex-col items-center gap-4">
-          <div className="flex items-center gap-2 text-text-600 text-[10px] font-black uppercase tracking-[0.2em]">
+          <div className="flex items-center gap-2 text-probix-muted dark:text-text-600 text-[10px] font-black uppercase tracking-[0.2em]">
             <Zap size={12} className="text-accent" />
             Verified Settlement on Base
           </div>
-          <div className="w-12 h-1 bg-probix-700 rounded-full opacity-20" />
+          <div className="w-12 h-1 bg-probix-border dark:bg-probix-700 rounded-full opacity-20" />
         </div>
       </motion.div>
     </>

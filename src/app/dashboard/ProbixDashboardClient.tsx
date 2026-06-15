@@ -222,9 +222,59 @@ export default function ProbixDashboardClient() {
 
           <div className="flex items-center gap-6">
              <ThemeToggle />
-             <div className="relative cursor-pointer hover:opacity-80 transition-opacity" onClick={() => setShowNotifications(!showNotifications)}>
-                <Bell size={20} className="text-probix-muted" />
-                <div className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center text-[9px] font-black text-white shadow-glow border-2 border-probix-bg">3</div>
+             <div className="relative">
+                <Button variant="ghost" size="icon" className="h-10 w-10 glass !rounded-xl hover:border-primary/30 relative" onClick={() => setShowNotifications(!showNotifications)}>
+                    <Bell size={20} />
+                    <div className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full animate-pulse shadow-glow shadow-primary/50" />
+                </Button>
+                <AnimatePresence>
+                    {showNotifications && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                            className="absolute right-0 mt-4 w-[360px] glass rounded-[32px] p-8 border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-[100] text-left"
+                        >
+                            <div className="flex justify-between items-center mb-8">
+                                <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-probix-muted">Recent Alerts</h3>
+                                <button className="text-[9px] font-black text-primary uppercase tracking-widest hover:underline">Mark all read</button>
+                            </div>
+                            <div className="space-y-6">
+                                <div className="flex items-start gap-5 group cursor-pointer">
+                                    <div className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary shrink-0 group-hover:scale-110 transition-transform">
+                                        <TrendingUp size={18} />
+                                    </div>
+                                    <div className="flex-1 space-y-1">
+                                        <p className="text-sm font-black italic uppercase text-white group-hover:text-primary transition-colors">Market Shift Detected</p>
+                                        <p className="text-[11px] font-bold text-probix-muted leading-tight opacity-70">Naira-USD Terminal node has shifted +12.4% Bullish in the last cycle.</p>
+                                        <p className="text-[9px] font-black text-probix-muted uppercase opacity-40">2 mins ago</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-5 group cursor-pointer">
+                                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0 group-hover:scale-110 transition-transform">
+                                        <CheckCircle2 size={18} />
+                                    </div>
+                                    <div className="flex-1 space-y-1">
+                                        <p className="text-sm font-black italic uppercase text-white group-hover:text-primary transition-colors">Position Verified</p>
+                                        <p className="text-[11px] font-bold text-probix-muted leading-tight opacity-70">Your YES position on #NGR-INF-27 has been established on Base.</p>
+                                        <p className="text-[9px] font-black text-probix-muted uppercase opacity-40">15 mins ago</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-5 group cursor-pointer">
+                                    <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center text-accent shrink-0 group-hover:scale-110 transition-transform">
+                                        <Zap size={18} />
+                                    </div>
+                                    <div className="flex-1 space-y-1">
+                                        <p className="text-sm font-black italic uppercase text-white group-hover:text-primary transition-colors">Liquidity Match</p>
+                                        <p className="text-[11px] font-bold text-probix-muted leading-tight opacity-70">Lagos Oracle Hub 4 has verified new analytical clusters for session 2.4.</p>
+                                        <p className="text-[9px] font-black text-probix-muted uppercase opacity-40">1 hour ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <Button variant="secondary" className="w-full mt-8 !rounded-2xl !py-4 text-[10px] font-black uppercase tracking-[0.2em] italic glass border-white/5 hover:bg-white/10">View Analytical Hub</Button>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
              </div>
              <div className="cursor-pointer hover:opacity-80 transition-opacity flex items-center gap-3" onClick={() => setView('profile')}>
                 <img src="https://i.pravatar.cc/150?u=9" className="w-10 h-10 rounded-full object-cover border border-primary/20" alt="Avatar" />
@@ -244,11 +294,11 @@ export default function ProbixDashboardClient() {
               {view === 'home' && !detailedMarket && !activeCategory && (
                 <motion.div key="home" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-12 max-w-5xl">
 
-                  <div className="relative w-full rounded-[40px] bg-[#020308] border border-white/5 p-12 overflow-hidden shadow-3xl flex flex-col md:flex-row items-center min-h-[450px]">
+                  <div className="relative w-full rounded-[40px] bg-probix-surface dark:bg-[#020308] border border-probix-border dark:border-white/5 p-12 overflow-hidden shadow-3xl flex flex-col md:flex-row items-center min-h-[450px]">
                       <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_50%,_rgba(59,130,246,0.06),_transparent_70%)] pointer-events-none" />
 
                       <div className="relative z-30 flex-[1.2] text-left space-y-8 pl-4">
-                          <h1 className="text-7xl lg:text-8xl font-black italic tracking-tighter leading-[0.85] text-white uppercase">
+                          <h1 className="text-7xl lg:text-8xl font-black italic tracking-tighter leading-[0.85] text-probix-text dark:text-white uppercase">
                               The future <br /> isn&apos;t guessed. <br /> It&apos;s <span className="text-primary italic drop-shadow-glow text-[#3B82F6]">forecasted.</span>
                           </h1>
                           <p className="text-xl text-probix-muted font-bold italic opacity-80 max-w-sm leading-relaxed">
@@ -258,9 +308,9 @@ export default function ProbixDashboardClient() {
                               <Button size="lg" className="!px-10 !rounded-full !py-6 shadow-3xl shadow-primary/50 font-black italic uppercase tracking-widest text-lg group active:scale-95 transition-all text-white">
                                   Explore trending <ArrowRight className="ml-3 group-hover:translate-x-2 transition-transform" />
                               </Button>
-                              <button className="flex items-center gap-3 text-sm font-black text-white hover:text-primary transition-all uppercase tracking-widest group/play">
-                                  <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center group-hover/play:border-primary transition-colors bg-white/5">
-                                      <CirclePlay size={20} className="fill-white/10 group-hover:fill-primary/20 transition-all" />
+                              <button className="flex items-center gap-3 text-sm font-black text-probix-text dark:text-white hover:text-primary transition-all uppercase tracking-widest group/play">
+                                  <div className="w-10 h-10 rounded-full border border-probix-border dark:border-white/10 flex items-center justify-center group-hover/play:border-primary transition-colors bg-probix-bg dark:bg-white/5">
+                                      <CirclePlay size={20} className="fill-probix-muted/10 dark:fill-white/10 group-hover:fill-primary/20 transition-all" />
                                   </div>
                                   How Probix works
                               </button>
@@ -304,7 +354,7 @@ export default function ProbixDashboardClient() {
                         ))}
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 px-1">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 px-1">
                       {filteredMarkets.slice(0, 4).map((market) => (
                         <MarketCard key={market.id} {...market} onClick={() => setDetailedMarket(market)} onQuickBet={() => setSelectedMarket(market)} />
                       ))}
@@ -312,22 +362,22 @@ export default function ProbixDashboardClient() {
                   </div>
 
                   {/* BOTTOM REPUTATION SECTION FROM IMAGE */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white/5 rounded-[32px] p-8 border border-white/5">
-                      <div className="flex flex-col items-center gap-3 text-center border-r border-white/5">
-                          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary"><Zap size={20}/></div>
-                          <p className="text-[10px] font-black uppercase tracking-widest text-white leading-tight">Real People<br/><span className="opacity-40">Real Opinions</span></p>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-probix-surface dark:bg-white/5 rounded-[24px] p-6 border border-probix-border dark:border-white/5">
+                      <div className="flex flex-col items-center gap-2 text-center border-r border-probix-border dark:border-white/5">
+                          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary"><Zap size={16}/></div>
+                          <p className="text-[9px] font-black uppercase tracking-widest text-probix-text dark:text-white leading-tight">Real People<br/><span className="opacity-40">Real Opinions</span></p>
                       </div>
-                      <div className="flex flex-col items-center gap-3 text-center border-r border-white/5">
-                          <div className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary"><CheckCircle2 size={20}/></div>
-                          <p className="text-[10px] font-black uppercase tracking-widest text-white leading-tight">Reputation-Based<br/><span className="opacity-40">Forecasting</span></p>
+                      <div className="flex flex-col items-center gap-2 text-center border-r border-probix-border dark:border-white/5">
+                          <div className="w-8 h-8 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary"><CheckCircle2 size={16}/></div>
+                          <p className="text-[9px] font-black uppercase tracking-widest text-probix-text dark:text-white leading-tight">Reputation-Based<br/><span className="opacity-40">Forecasting</span></p>
                       </div>
-                      <div className="flex flex-col items-center gap-3 text-center border-r border-white/5">
-                          <div className="w-10 h-10 rounded-xl bg-fuchsia/10 flex items-center justify-center text-fuchsia"><Zap size={20}/></div>
-                          <p className="text-[10px] font-black uppercase tracking-widest text-white leading-tight">AI-Powered<br/><span className="opacity-40">Insights</span></p>
+                      <div className="flex flex-col items-center gap-2 text-center border-r border-probix-border dark:border-white/5">
+                          <div className="w-8 h-8 rounded-lg bg-fuchsia/10 flex items-center justify-center text-fuchsia"><Zap size={16}/></div>
+                          <p className="text-[9px] font-black uppercase tracking-widest text-probix-text dark:text-white leading-tight">AI-Powered<br/><span className="opacity-40">Insights</span></p>
                       </div>
-                      <div className="flex flex-col items-center gap-3 text-center">
-                          <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center text-accent"><Globe size={20}/></div>
-                          <p className="text-[10px] font-black uppercase tracking-widest text-white leading-tight">African-Centric<br/><span className="opacity-40">Intelligence</span></p>
+                      <div className="flex flex-col items-center gap-2 text-center">
+                          <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent"><Globe size={16}/></div>
+                          <p className="text-[9px] font-black uppercase tracking-widest text-probix-text dark:text-white leading-tight">African-Centric<br/><span className="opacity-40">Intelligence</span></p>
                       </div>
                   </div>
                 </motion.div>
