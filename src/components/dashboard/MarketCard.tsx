@@ -22,7 +22,6 @@ export function MarketCard({
   comments,
   onClick,
   icon,
-  onQuickBet
 }: MarketCardProps) {
   const data = chartData.map((val, i) => ({ time: i, value: val }));
 
@@ -30,27 +29,27 @@ export function MarketCard({
     <motion.div
       whileHover={{ y: -8, scale: 1.01 }}
       whileTap={{ scale: 0.97 }}
-      className="glass group cursor-pointer hover:border-kinpaku-gold/30 relative overflow-hidden h-[420px] flex flex-col p-6 transition-all duration-300 shadow-2xl bg-probix-surface dark:bg-raised-lacquer rounded-[24px] hairline-gold text-left"
+      className="glass group cursor-pointer hover:border-primary/30 relative overflow-hidden h-[400px] flex flex-col p-6 transition-all duration-300 shadow-xl bg-probix-surface dark:bg-white/[0.02] rounded-[24px] border-probix-border dark:border-white/5 text-left"
     >
       <div className="flex justify-between items-start mb-6 relative z-10">
-         <div className="flex items-center gap-2.5 bg-probix-bg dark:bg-lacquer-black/40 px-3 py-1.5 rounded-lg border border-probix-border dark:border-kinpaku-gold/10">
+         <div className="flex items-center gap-2.5 bg-probix-bg dark:bg-white/5 px-3 py-1.5 rounded-lg border border-probix-border dark:border-white/5">
             <span className="text-lg grayscale group-hover:grayscale-0 transition-all">{icon}</span>
-            <span className="text-[9px] font-black uppercase tracking-widest text-probix-muted group-hover:text-probix-text dark:group-hover:text-champagne transition-colors">{category}</span>
+            <span className="text-[9px] font-black uppercase tracking-widest text-probix-muted group-hover:text-primary transition-colors">{category}</span>
          </div>
-         <button className="text-probix-muted hover:text-kinpaku-gold transition-colors p-1"><MoreVertical size={16} /></button>
+         <button className="text-probix-muted hover:text-primary transition-colors p-1"><MoreVertical size={16} /></button>
       </div>
 
       <div onClick={onClick} className="flex-1 relative z-10 flex flex-col">
-         <h4 className="text-xl font-black italic leading-[1.1] mb-4 line-clamp-3 group-hover:text-kinpaku-gold transition-colors tracking-tighter uppercase text-probix-text dark:text-champagne min-h-[3.3rem]">
+         <h4 className="text-lg font-black italic leading-[1.2] mb-4 line-clamp-2 group-hover:text-primary transition-colors tracking-tight uppercase text-probix-text dark:text-white min-h-[2.4rem]">
            {title}
          </h4>
 
          <div className="flex items-center gap-2.5 mb-1 tabular">
-            <p className="text-5xl font-black italic tracking-tighter leading-none" style={{ color }}>{percentage}%</p>
+            <p className="text-5xl font-black italic tracking-tighter leading-none text-secondary drop-shadow-glow">{percentage}%</p>
             <span className="text-[10px] font-black uppercase text-probix-muted tracking-widest pb-0.5 italic opacity-60">YES</span>
          </div>
 
-         <div className={`flex items-center gap-1.5 font-black text-[9px] uppercase italic tracking-widest leading-none tabular ${trend.includes('+') ? 'text-verdigris' : 'text-vermilion'}`}>
+         <div className={`flex items-center gap-1.5 font-black text-[9px] uppercase italic tracking-widest leading-none tabular ${trend.includes('+') ? 'text-secondary' : 'text-crimson'}`}>
             <TrendingUp size={12} className={trend.includes('+') ? '' : 'rotate-180'} />
             {trend}
          </div>
@@ -78,20 +77,20 @@ export function MarketCard({
         </ResponsiveContainer>
       </div>
 
-      <div className="flex items-center justify-between pt-6 border-t border-white/5 relative z-10 text-probix-muted">
-          <div className="flex items-center gap-6">
-              <div className="flex items-center gap-2">
-                  <Users size={14} className="opacity-60" />
-                  <span className="text-[10px] font-black uppercase tracking-widest">{volume.split(' ')[0]}</span>
+      <div className="flex items-center justify-between pt-4 border-t border-probix-border dark:border-white/5 relative z-10 text-probix-muted">
+          <div className="flex items-center gap-4">
+              <div className="flex items-center gap-1.5">
+                  <Users size={12} className="opacity-60" />
+                  <span className="text-[9px] font-black uppercase tracking-widest tabular">{volume.split(' ')[0]}</span>
               </div>
-              <div className="flex items-center gap-2">
-                  <MessageSquare size={14} className="opacity-60" />
-                  <span className="text-[10px] font-black uppercase tracking-widest">{comments}</span>
+              <div className="flex items-center gap-1.5">
+                  <MessageSquare size={12} className="opacity-60" />
+                  <span className="text-[9px] font-black uppercase tracking-widest tabular">{comments}</span>
               </div>
           </div>
-          <div className="flex -space-x-2">
-              {[1,2,3].map(i => <img key={i} src={`https://i.pravatar.cc/150?u=${i+10}`} className="w-6 h-6 rounded-full border border-[#0A0C12] object-cover" />)}
-              <div className="w-6 h-6 rounded-full border border-[#0A0C12] bg-white/5 flex items-center justify-center text-[8px] font-black italic">+8</div>
+          <div className="flex -space-x-1.5">
+              {[1,2,3].map(i => <img key={i} src={`https://i.pravatar.cc/150?u=${i+10}`} className="w-5 h-5 rounded-full border border-[#0A0C12] object-cover" alt="Analyst" />)}
+              <div className="w-5 h-5 rounded-full border border-[#0A0C12] bg-probix-surface dark:bg-white/5 flex items-center justify-center text-[7px] font-black italic">+8</div>
           </div>
       </div>
     </motion.div>

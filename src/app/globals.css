@@ -1,20 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand Palette - Elite Pro (OKLCH Native) */
-  --color-lacquer-black: oklch(7% 0.006 95);
-  --color-raised-lacquer: oklch(11% 0.006 95);
-  --color-kinpaku-gold: oklch(84% 0.19 80.46);
-  --color-verdigris: oklch(70% 0.12 188);
-  --color-champagne: oklch(91% 0 0);
-  --color-vermilion: oklch(58% 0.15 35);
+  /* Brand Palette - Classic Elite (OKLCH Polished) */
+  --color-primary: oklch(65% 0.2 250);      /* Polished Classic Blue */
+  --color-secondary: oklch(75% 0.18 160);    /* Polished Classic Green */
+  --color-fuchsia: oklch(70% 0.25 330);
+  --color-accent: oklch(80% 0.18 85);
+  --color-crimson: oklch(60% 0.2 25);
 
-  --color-primary: var(--color-kinpaku-gold);
-  --color-primary-glow: rgba(220, 180, 100, 0.4);
-  --color-secondary: var(--color-verdigris);
-  --color-fuchsia: #D946EF;
-  --color-accent: #F59E0B;
-  --color-crimson: var(--color-vermilion);
+  --color-primary-glow: oklch(65% 0.2 250 / 40%);
 
   /* Theme-aware Backgrounds */
   --color-probix-bg: var(--probix-bg);
@@ -25,24 +19,24 @@
 }
 
 :root {
-  --probix-bg: #FFFFFF;
-  --probix-surface: #F9FAFB;
+  --probix-bg: oklch(100% 0 0);
+  --probix-surface: oklch(98% 0.005 250);
   --probix-border: oklch(0% 0 0 / 8%);
-  --probix-text: oklch(15% 0.01 250);
-  --probix-muted: oklch(55% 0.02 250);
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(0, 0, 0, 0.05);
-  font-size: 13px;
+  --probix-text: oklch(20% 0.02 250);
+  --probix-muted: oklch(50% 0.03 250);
+  --glass-bg: oklch(100% 0 0 / 70%);
+  --glass-border: oklch(0% 0 0 / 5%);
+  font-size: 14px; /* Refined base size */
 }
 
 [data-theme='dark'] {
-  --probix-bg: var(--color-lacquer-black);
-  --probix-surface: var(--color-raised-lacquer);
-  --probix-border: oklch(100% 0 0 / 8%);
-  --probix-text: var(--color-champagne);
-  --probix-muted: oklch(65% 0.01 250);
-  --glass-bg: rgba(11, 11, 12, 0.6);
-  --glass-border: oklch(84% 0.19 80.46 / 15%);
+  --probix-bg: oklch(12% 0.01 250);      /* Deep midnight, not pure black */
+  --probix-surface: oklch(16% 0.015 250);
+  --probix-border: oklch(100% 0 0 / 10%);
+  --probix-text: oklch(95% 0.01 250);
+  --probix-muted: oklch(70% 0.02 250);
+  --glass-bg: oklch(16% 0.015 250 / 60%);
+  --glass-border: oklch(100% 0 0 / 10%);
 }
 
 body {
@@ -52,42 +46,34 @@ body {
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.4s cubic-bezier(0.23, 1, 0.32, 1), color 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   text-wrap: pretty;
+  line-height: 1.5;
 }
 
 /* Tabular Numbers for Terminal Data */
 .tabular {
   font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
 }
 
 /* Elite Utilities */
 @utility glass {
   background-color: var(--glass-bg);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(24px);
   border: 1px solid var(--glass-border);
-  box-shadow: 0 4px 24px -1px oklch(0% 0 0 / 10%);
 }
 
-/* Hairline-First Depth */
-@utility hairline-gold {
-  border: 0.5px solid oklch(84% 0.19 80.46 / 20%);
-}
-
-@keyframes scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-.animate-scroll {
-  animation: scroll 40s linear infinite;
-}
-
+/* Concentric Radius Math */
 @utility bento-card {
   @apply bg-probix-surface border border-probix-border rounded-[24px] p-6 transition-all duration-300;
-  box-shadow: 0 2px 8px -1px oklch(0% 0 0 / 5%);
+  /* Outer radius 24px, Inner elements should use ~16px */
 }
 
 @utility shadow-glow {
-  box-shadow: 0 0 20px var(--color-primary-glow);
+  box-shadow: 0 0 25px -5px var(--color-primary-glow);
+}
+
+@utility drop-shadow-glow {
+  filter: drop-shadow(0 0 8px var(--color-primary-glow));
 }
 
 @utility shadow-glow {
