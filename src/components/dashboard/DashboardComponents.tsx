@@ -265,18 +265,18 @@ interface TransactionRowProps {
 
 export function TransactionRow({ tx }: TransactionRowProps) {
   return (
-    <div className="flex items-center justify-between p-6 rounded-[28px] glass border-white/5 hover:bg-white/[0.02] transition-all group shadow-xl bg-white/[0.01]">
+    <div className="flex items-center justify-between p-6 rounded-[24px] glass hairline-gold hover:bg-raised-lacquer transition-all group shadow-xl bg-white/[0.01] active:scale-[0.98]">
         <div className="flex items-center gap-6">
-            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${tx.type === 'topup' ? 'bg-secondary/10 text-secondary' : 'bg-primary/10 text-primary'}`}>
+            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${tx.type === 'topup' ? 'bg-verdigris/10 text-verdigris' : 'bg-kinpaku-gold/10 text-kinpaku-gold'}`}>
                 {tx.type === 'topup' ? <CheckCircle2 size={24}/> : <TrendingUp size={24}/>}
             </div>
             <div className="text-left">
-                <p className="text-lg font-black italic uppercase tracking-tight text-white group-hover:text-primary transition-colors leading-none mb-1">{tx.marketTitle}</p>
-                <p className="text-[10px] font-bold text-probix-muted uppercase tracking-widest italic opacity-60">{new Date(tx.timestamp).toLocaleString()}</p>
+                <p className="text-lg font-black italic uppercase tracking-tight text-probix-text dark:text-champagne group-hover:text-kinpaku-gold transition-colors leading-none mb-1">{tx.marketTitle}</p>
+                <p className="text-[10px] font-bold text-probix-muted uppercase tracking-widest italic opacity-60 tabular">{new Date(tx.timestamp).toLocaleString()}</p>
             </div>
         </div>
-        <div className="text-right">
-            <p className={`text-xl font-black italic leading-none mb-1 ${tx.amount > 0 ? 'text-secondary' : 'text-white'}`}>
+        <div className="text-right tabular">
+            <p className={`text-xl font-black italic leading-none mb-1 ${tx.amount > 0 ? 'text-verdigris' : 'text-probix-text dark:text-champagne'}`}>
                 {tx.amount > 0 ? '+' : ''}₦{Math.abs(tx.amount).toLocaleString()}
             </p>
             <p className="text-[9px] font-black uppercase text-probix-muted tracking-widest opacity-40 italic">TX: {tx.id.slice(-6)}</p>

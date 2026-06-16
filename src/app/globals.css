@@ -1,13 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand Palette - Elite Pro */
-  --color-primary: #3B82F6;
-  --color-primary-glow: rgba(59, 130, 246, 0.5);
-  --color-secondary: #10B981;
+  /* Brand Palette - Elite Pro (OKLCH Native) */
+  --color-lacquer-black: oklch(7% 0.006 95);
+  --color-raised-lacquer: oklch(11% 0.006 95);
+  --color-kinpaku-gold: oklch(84% 0.19 80.46);
+  --color-verdigris: oklch(70% 0.12 188);
+  --color-champagne: oklch(91% 0 0);
+  --color-vermilion: oklch(58% 0.15 35);
+
+  --color-primary: var(--color-kinpaku-gold);
+  --color-primary-glow: rgba(220, 180, 100, 0.4);
+  --color-secondary: var(--color-verdigris);
   --color-fuchsia: #D946EF;
   --color-accent: #F59E0B;
-  --color-crimson: #EF4444;
+  --color-crimson: var(--color-vermilion);
 
   /* Theme-aware Backgrounds */
   --color-probix-bg: var(--probix-bg);
@@ -20,22 +27,22 @@
 :root {
   --probix-bg: #FFFFFF;
   --probix-surface: #F9FAFB;
-  --probix-border: rgba(0, 0, 0, 0.08);
-  --probix-text: #0F172A;
-  --probix-muted: #64748B;
+  --probix-border: oklch(0% 0 0 / 8%);
+  --probix-text: oklch(15% 0.01 250);
+  --probix-muted: oklch(55% 0.02 250);
   --glass-bg: rgba(255, 255, 255, 0.7);
   --glass-border: rgba(0, 0, 0, 0.05);
   font-size: 13px;
 }
 
 [data-theme='dark'] {
-  --probix-bg: #010206;
-  --probix-surface: #0A0A0C;
-  --probix-border: rgba(255, 255, 255, 0.05);
-  --probix-text: #F9FAFB;
-  --probix-muted: #94A3B8;
-  --glass-bg: rgba(0, 0, 0, 0.4);
-  --glass-border: rgba(255, 255, 255, 0.05);
+  --probix-bg: var(--color-lacquer-black);
+  --probix-surface: var(--color-raised-lacquer);
+  --probix-border: oklch(100% 0 0 / 8%);
+  --probix-text: var(--color-champagne);
+  --probix-muted: oklch(65% 0.01 250);
+  --glass-bg: rgba(11, 11, 12, 0.6);
+  --glass-border: oklch(84% 0.19 80.46 / 15%);
 }
 
 body {
@@ -43,7 +50,13 @@ body {
   color: var(--probix-text);
   font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 0.4s cubic-bezier(0.23, 1, 0.32, 1), color 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  text-wrap: pretty;
+}
+
+/* Tabular Numbers for Terminal Data */
+.tabular {
+  font-variant-numeric: tabular-nums;
 }
 
 /* Elite Utilities */
@@ -51,6 +64,12 @@ body {
   background-color: var(--glass-bg);
   backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 24px -1px oklch(0% 0 0 / 10%);
+}
+
+/* Hairline-First Depth */
+@utility hairline-gold {
+  border: 0.5px solid oklch(84% 0.19 80.46 / 20%);
 }
 
 @keyframes scroll {
@@ -59,11 +78,16 @@ body {
 }
 
 .animate-scroll {
-  animation: scroll 30s linear infinite;
+  animation: scroll 40s linear infinite;
 }
 
 @utility bento-card {
-  @apply bg-probix-surface border border-probix-border rounded-[32px] p-6 transition-all duration-300 hover:shadow-2xl;
+  @apply bg-probix-surface border border-probix-border rounded-[24px] p-6 transition-all duration-300;
+  box-shadow: 0 2px 8px -1px oklch(0% 0 0 / 5%);
+}
+
+@utility shadow-glow {
+  box-shadow: 0 0 20px var(--color-primary-glow);
 }
 
 @utility shadow-glow {

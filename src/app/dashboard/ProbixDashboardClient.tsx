@@ -734,7 +734,9 @@ export default function ProbixDashboardClient() {
                                           <p className="text-sm font-bold italic text-probix-muted text-center py-10">No recent transactions synchronized.</p>
                                       ) : (
                                           transactions.map(tx => (
-                                              <TransactionRow key={tx.id} tx={tx} />
+                                              <div key={tx.id} className="tabular">
+                                                <TransactionRow tx={tx} />
+                                              </div>
                                           ))
                                       )}
                                   </div>

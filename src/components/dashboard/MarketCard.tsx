@@ -29,27 +29,28 @@ export function MarketCard({
   return (
     <motion.div
       whileHover={{ y: -8, scale: 1.01 }}
-      className="glass group cursor-pointer hover:border-white/20 relative overflow-hidden h-[420px] flex flex-col p-6 transition-all duration-500 shadow-2xl bg-probix-surface dark:bg-[#0A0C12]/40 rounded-[28px] border-white/5 text-left"
+      whileTap={{ scale: 0.97 }}
+      className="glass group cursor-pointer hover:border-kinpaku-gold/30 relative overflow-hidden h-[420px] flex flex-col p-6 transition-all duration-300 shadow-2xl bg-probix-surface dark:bg-raised-lacquer rounded-[24px] hairline-gold text-left"
     >
       <div className="flex justify-between items-start mb-6 relative z-10">
-         <div className="flex items-center gap-2.5 bg-probix-bg dark:bg-white/5 px-3 py-1.5 rounded-lg border border-probix-border dark:border-white/5">
+         <div className="flex items-center gap-2.5 bg-probix-bg dark:bg-lacquer-black/40 px-3 py-1.5 rounded-lg border border-probix-border dark:border-kinpaku-gold/10">
             <span className="text-lg grayscale group-hover:grayscale-0 transition-all">{icon}</span>
-            <span className="text-[9px] font-black uppercase tracking-widest text-probix-muted group-hover:text-probix-text dark:group-hover:text-white transition-colors">{category}</span>
+            <span className="text-[9px] font-black uppercase tracking-widest text-probix-muted group-hover:text-probix-text dark:group-hover:text-champagne transition-colors">{category}</span>
          </div>
-         <button className="text-probix-muted hover:text-probix-text dark:hover:text-white transition-colors p-1"><MoreVertical size={16} /></button>
+         <button className="text-probix-muted hover:text-kinpaku-gold transition-colors p-1"><MoreVertical size={16} /></button>
       </div>
 
       <div onClick={onClick} className="flex-1 relative z-10 flex flex-col">
-         <h4 className="text-xl font-black italic leading-[1.1] mb-4 line-clamp-3 group-hover:text-primary transition-colors tracking-tighter uppercase text-probix-text dark:text-white min-h-[3.3rem]">
+         <h4 className="text-xl font-black italic leading-[1.1] mb-4 line-clamp-3 group-hover:text-kinpaku-gold transition-colors tracking-tighter uppercase text-probix-text dark:text-champagne min-h-[3.3rem]">
            {title}
          </h4>
 
-         <div className="flex items-center gap-2.5 mb-1">
+         <div className="flex items-center gap-2.5 mb-1 tabular">
             <p className="text-5xl font-black italic tracking-tighter leading-none" style={{ color }}>{percentage}%</p>
             <span className="text-[10px] font-black uppercase text-probix-muted tracking-widest pb-0.5 italic opacity-60">YES</span>
          </div>
 
-         <div className={`flex items-center gap-1.5 font-black text-[9px] uppercase italic tracking-widest leading-none ${trend.includes('+') ? 'text-secondary' : 'text-crimson'}`}>
+         <div className={`flex items-center gap-1.5 font-black text-[9px] uppercase italic tracking-widest leading-none tabular ${trend.includes('+') ? 'text-verdigris' : 'text-vermilion'}`}>
             <TrendingUp size={12} className={trend.includes('+') ? '' : 'rotate-180'} />
             {trend}
          </div>
