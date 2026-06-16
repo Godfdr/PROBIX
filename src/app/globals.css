@@ -39,14 +39,20 @@
   --glass-border: oklch(100% 0 0 / 10%);
 }
 
+/* Strong ease-out for UI interactions (Emil Kowalski Framework) */
+--ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+--ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+--ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
 body {
   background-color: var(--probix-bg);
   color: var(--probix-text);
   font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.4s cubic-bezier(0.23, 1, 0.32, 1), color 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: background-color 0.4s var(--ease-out), color 0.4s var(--ease-out);
   text-wrap: pretty;
   line-height: 1.5;
+  letter-spacing: -0.01em;
 }
 
 /* Tabular Numbers for Terminal Data */
@@ -62,10 +68,26 @@ body {
   border: 1px solid var(--glass-border);
 }
 
+/* Weight Inversion (Impeccable Rule) */
+h2 {
+  font-weight: 600 !important;
+  letter-spacing: -0.04em !important;
+}
+
+h1 {
+  font-weight: 300 !important;
+  letter-spacing: -0.05em !important;
+}
+
+/* Tactile Response */
+.active-press:active {
+  transform: scale(0.97);
+  transition: transform 100ms var(--ease-out);
+}
+
 /* Concentric Radius Math */
 @utility bento-card {
-  @apply bg-probix-surface border border-probix-border rounded-[24px] p-6 transition-all duration-300;
-  /* Outer radius 24px, Inner elements should use ~16px */
+  @apply bg-probix-surface border border-probix-border rounded-[24px] p-8 transition-all duration-500;
 }
 
 @utility shadow-glow {
