@@ -125,29 +125,6 @@ export function Sidebar({
                   <Crown size={12} className="text-accent group-hover:scale-125 transition-transform" /> Upgrade to Pro <ChevronRight size={12} className="ml-auto opacity-40" />
               </Button>
           </div>
-
-          <div className="glass p-5 rounded-[24px] border border-white/5 space-y-4">
-              <div className="flex justify-between items-center px-1">
-                  <span className="text-[10px] font-black text-probix-muted uppercase tracking-widest italic">Your Accuracy</span>
-                  <div className="flex items-center gap-1.5">
-                      <Users size={10} className="text-probix-muted" />
-                      <span className="text-[10px] font-black text-white italic tracking-tighter leading-none">Top 18%</span>
-                  </div>
-              </div>
-              <div className="flex items-end justify-between gap-4">
-                  <div className="space-y-1">
-                      <p className="text-3xl font-black italic text-white leading-none">78%</p>
-                      <p className="text-[8px] font-black text-secondary uppercase tracking-widest italic leading-none">+4.3% today</p>
-                  </div>
-                  <div className="flex-1 h-10 flex items-end gap-1 px-1">
-                      {[30, 45, 35, 60, 55, 75, 70, 78].map((h, i) => (
-                          <div key={i} className="flex-1 bg-primary/20 rounded-t-sm relative overflow-hidden group/bar">
-                              <motion.div initial={{ height: 0 }} animate={{ height: `${h}%` }} className="absolute bottom-0 w-full bg-primary" />
-                          </div>
-                      ))}
-                  </div>
-              </div>
-          </div>
       </div>
     </aside>
   );
@@ -163,13 +140,13 @@ interface SidebarItemProps {
 
 function SidebarItem({ icon, label, active, onClick, badge }: SidebarItemProps) {
   return (
-    <button onClick={onClick} className={`flex items-center justify-between px-6 py-4.5 rounded-[22px] transition-all duration-500 relative group ${active ? "bg-primary text-white shadow-2xl shadow-primary/30 font-black scale-[1.02]" : "text-probix-muted hover:bg-white/[0.04] hover:text-probix-text font-bold"}`}>
+    <button onClick={onClick} className={`flex items-center justify-between px-6 py-3 rounded-[16px] transition-all relative group ${active ? "bg-primary text-white shadow-lg font-black" : "text-probix-muted hover:bg-white/[0.04] hover:text-probix-text font-bold"}`}>
       <div className="flex items-center gap-4 italic text-sm tracking-tight text-left">
-        <span className={`${active ? "text-white drop-shadow-glow" : "text-primary/60 group-hover:scale-110 transition-transform duration-500"}`}>{icon}</span>
+        <span className={`${active ? "text-white" : "text-primary/60 group-hover:scale-110 transition-transform"}`}>{icon}</span>
         {label}
       </div>
       {badge && <span className="bg-primary/20 text-primary text-[8px] font-black px-2 py-0.5 rounded-md uppercase tracking-[0.2em] border border-primary/20">{badge}</span>}
-      {active && <ChevronRight size={16} className="ml-auto opacity-70 group-hover:translate-x-1 transition-transform" />}
+      {active && <ChevronRight size={14} className="ml-auto opacity-70 group-hover:translate-x-1 transition-transform" />}
     </button>
   );
 }
@@ -182,10 +159,9 @@ interface ShortcutItemProps {
 
 function ShortcutItem({ label, icon, onClick }: ShortcutItemProps) {
   return (
-    <button onClick={onClick} className="flex items-center gap-5 px-5 py-4 text-xs font-bold text-probix-muted hover:text-probix-text transition-all w-full group rounded-2xl hover:bg-white/[0.03] text-left">
-       <span className="text-2xl group-hover:scale-125 transition-transform duration-500 drop-shadow-xl filter grayscale group-hover:grayscale-0">{icon}</span>
+    <button onClick={onClick} className="flex items-center gap-4 px-4 py-3 text-xs font-bold text-probix-muted hover:text-probix-text transition-all w-full group rounded-xl hover:bg-white/[0.03] text-left">
+       <span className="text-xl group-hover:scale-110 transition-transform">{icon}</span>
        <span className="font-black italic tracking-tighter uppercase opacity-80 group-hover:opacity-100 text-left">{label}</span>
-       <ChevronRight size={14} className="ml-auto opacity-0 group-hover:opacity-40 transition-all group-hover:translate-x-1 text-left" />
     </button>
   );
 }

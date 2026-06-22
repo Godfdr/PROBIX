@@ -19,29 +19,24 @@
 }
 
 :root {
-  --probix-bg: oklch(100% 0 0);
-  --probix-surface: oklch(98% 0.005 250);
-  --probix-border: oklch(0% 0 0 / 8%);
-  --probix-text: oklch(20% 0.02 250);
-  --probix-muted: oklch(50% 0.03 250);
-  --glass-bg: oklch(100% 0 0 / 70%);
-  --glass-border: oklch(0% 0 0 / 5%);
-  font-size: 14px; /* Refined base size */
-
-  /* Strong ease-out for UI interactions (Emil Kowalski Framework) */
-  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
-  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --probix-bg: #FFFFFF;
+  --probix-surface: #F9FAFB;
+  --probix-border: rgba(0, 0, 0, 0.08);
+  --probix-text: #0F172A;
+  --probix-muted: #64748B;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.05);
+  font-size: 13px;
 }
 
 [data-theme='dark'] {
-  --probix-bg: oklch(12% 0.01 250);      /* Deep midnight, not pure black */
-  --probix-surface: oklch(16% 0.015 250);
-  --probix-border: oklch(100% 0 0 / 10%);
-  --probix-text: oklch(95% 0.01 250);
-  --probix-muted: oklch(70% 0.02 250);
-  --glass-bg: oklch(16% 0.015 250 / 60%);
-  --glass-border: oklch(100% 0 0 / 10%);
+  --probix-bg: #010206;
+  --probix-surface: #0A0A0C;
+  --probix-border: rgba(255, 255, 255, 0.05);
+  --probix-text: #F9FAFB;
+  --probix-muted: #94A3B8;
+  --glass-bg: rgba(0, 0, 0, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.05);
 }
 
 body {
@@ -49,10 +44,7 @@ body {
   color: var(--probix-text);
   font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.4s var(--ease-out), color 0.4s var(--ease-out);
-  text-wrap: pretty;
-  line-height: 1.5;
-  letter-spacing: -0.01em;
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Tabular Numbers for Terminal Data */
