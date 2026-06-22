@@ -1,109 +1,33 @@
 @import "tailwindcss";
 
-@theme {
-  /* Brand Palette - Classic Elite (OKLCH Polished) */
-  --color-primary: oklch(65% 0.2 250);      /* Polished Classic Blue */
-  --color-secondary: oklch(75% 0.18 160);    /* Polished Classic Green */
-  --color-fuchsia: oklch(70% 0.25 330);
-  --color-accent: oklch(80% 0.18 85);
-  --color-crimson: oklch(60% 0.2 25);
-
-  --color-primary-glow: oklch(65% 0.2 250 / 40%);
-
-  /* Theme-aware Backgrounds */
-  --color-probix-bg: var(--probix-bg);
-  --color-probix-surface: var(--probix-surface);
-  --color-probix-border: var(--probix-border);
-  --color-probix-text: var(--probix-text);
-  --color-probix-muted: var(--probix-muted);
-}
-
 :root {
   --probix-bg: #FFFFFF;
-  --probix-surface: #F9FAFB;
-  --probix-border: rgba(0, 0, 0, 0.08);
   --probix-text: #0F172A;
-  --probix-muted: #64748B;
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(0, 0, 0, 0.05);
-  font-size: 13px;
-
-  /* Animation Easing */
-  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --probix-border: rgba(0, 0, 0, 0.08);
 }
 
 [data-theme='dark'] {
-  --probix-bg: #010206;
-  --probix-surface: #0A0A0C;
-  --probix-border: rgba(255, 255, 255, 0.05);
+  --probix-bg: #050505;
   --probix-text: #F9FAFB;
-  --probix-muted: #94A3B8;
-  --glass-bg: rgba(0, 0, 0, 0.4);
-  --glass-border: rgba(255, 255, 255, 0.05);
+  --probix-border: rgba(255, 255, 255, 0.1);
 }
 
 body {
   background-color: var(--probix-bg);
   color: var(--probix-text);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Tabular Numbers for Terminal Data */
-.tabular {
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
-}
-
-/* Elite Utilities */
 @utility glass {
-  background-color: var(--glass-bg);
-  backdrop-filter: blur(24px);
-  border: 1px solid var(--glass-border);
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* Weight Inversion (Impeccable Rule) */
-h2 {
-  font-weight: 600 !important;
-  letter-spacing: -0.04em !important;
-}
-
-h1 {
-  font-weight: 300 !important;
-  letter-spacing: -0.05em !important;
-}
-
-/* Tactile Response */
-.active-press:active {
-  transform: scale(0.97);
-  transition: transform 100ms var(--ease-out);
-}
-
-/* Concentric Radius Math */
-@utility bento-card {
-  @apply bg-probix-surface border border-probix-border rounded-[24px] p-8 transition-all duration-500;
-}
-
-@utility shadow-glow {
-  box-shadow: 0 0 25px -5px var(--color-primary-glow);
-}
-
-@utility drop-shadow-glow {
-  filter: drop-shadow(0 0 8px var(--color-primary-glow));
-}
-
-@utility drop-shadow-neon {
-  filter: drop-shadow(0 0 5px #3B82F6) drop-shadow(0 0 15px #3B82F6);
-}
-
-/* 3D Parallax Helpers */
-.perspective-1000 {
-  perspective: 1000px;
-}
-
-.preserve-3d {
-  transform-style: preserve-3d;
+[data-theme='dark'] .glass {
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 /* Custom Scrollbar */

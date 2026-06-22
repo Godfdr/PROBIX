@@ -2,247 +2,82 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, TrendingUp, Shield, Zap, Lock, User, CirclePlay } from 'lucide-react';
+import { ArrowRight, TrendingUp, Shield, Zap, Lock, User } from 'lucide-react';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { Button } from '@/components/ui/Button';
-import { ProbixLogo } from '@/components/ui/ProbixLogo';
 import { useRouter } from 'next/navigation';
 import { useProbix } from '@/store/ProbixContext';
-import { GlassBadge, PulseNode } from '@/components/dashboard/DashboardComponents';
 
 export default function ProbixLanding() {
-  const [view, setView] = useState<'landing' | 'onboarding' | 'auth'>('landing');
+  const [view, setView] = useState<'landing' | 'auth'>('landing');
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
   const router = useRouter();
   const { login, isAuthenticated, isHydrated } = useProbix();
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Redirect if already authenticated and hydrated
-  useEffect(() => {
-    if (mounted && isHydrated && isAuthenticated) {
+    if (isHydrated && isAuthenticated) {
       router.push('/dashboard');
     }
-  }, [isAuthenticated, isHydrated, router, mounted]);
+  }, [isAuthenticated, isHydrated, router]);
 
-  if (!mounted || !isHydrated) {
-    return (
-      <div className="min-h-screen bg-probix-bg flex items-center justify-center">
-        <ProbixLogo size="md" className="animate-pulse opacity-50" />
-      </div>
-    );
-  }
-
-  // If we are authenticated but haven't redirected yet, show loading to prevent flicker
-  if (isAuthenticated) {
-     return (
-      <div className="min-h-screen bg-probix-bg flex items-center justify-center">
-        <ProbixLogo size="md" className="animate-pulse opacity-50" />
-      </div>
-    );
-  }
+  if (!isHydrated) return null;
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden selection:bg-primary/40 bg-probix-bg transition-colors duration-1000">
-
-      {/* PERSISTENT NAV */}
-      <nav className="fixed top-0 w-full z-[100] px-8 h-20 flex justify-between items-center bg-probix-bg/80 backdrop-blur-md border-b border-probix-border">
-        <div className="flex items-center gap-3 cursor-pointer group" onClick={() => setView('landing')}>
-          <ProbixLogo size="sm" />
-          <span className="font-black text-xl tracking-tighter italic">PROBIX</span>
-        </div>
-
-        <div className="flex items-center gap-6">
+    <div className="min-h-screen bg-white dark:bg-[#050505] text-slate-900 dark:text-white transition-colors duration-500">
+      <nav className="fixed top-0 w-full z-50 px-6 h-16 flex justify-between items-center bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-slate-200 dark:border-white/10">
+        <div className="font-black text-xl tracking-tighter" onClick={() => setView('landing')}>PROBIX</div>
+        <div className="flex items-center gap-4">
           <ThemeToggle />
-          <button className="text-xs font-black uppercase tracking-widest italic hover:text-primary transition-colors" onClick={() => { setAuthMode('login'); setView('auth'); }}>Log In</button>
-          <Button className="!rounded-xl !px-8 !py-4 shadow-glow text-xs font-black uppercase tracking-widest" onClick={() => setView('onboarding')}>Get Started</Button>
+          <button className="text-sm font-bold" onClick={() => { setAuthMode('login'); setView('auth'); }}>Log In</button>
+          <Button onClick={() => { setAuthMode('signup'); setView('auth'); }}>Get Started</Button>
         </div>
       </nav>
 
       <AnimatePresence mode="wait">
-
-        {/* --- VIEW: LANDING --- */}
         {view === 'landing' && (
-          <motion.section
-            key="landing"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 0.98 }}
-            className="relative min-h-screen flex flex-col items-center justify-center pt-20"
-          >
-            {/* AFRICA MAP BACKGROUND */}
-            <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none opacity-20">
-                <div className="relative w-full h-full max-w-7xl mx-auto flex items-center justify-end pr-10">
-                    <svg viewBox="0 0 1000 1000" className="w-[800px] h-[800px] text-primary/40 fill-current overflow-visible">
-                        <path d="M400,100 L450,100 L500,120 L550,150 L580,200 L600,250 L620,300 L650,320 L700,320 L750,350 L800,400 L820,450 L800,500 L750,600 L700,700 L650,800 L600,850 L550,900 L500,920 L450,900 L400,850 L350,750 L320,650 L300,550 L280,450 L250,400 L250,350 L280,300 L320,250 L350,200 Z" className="animate-pulse" style={{ strokeDasharray: '4 4', stroke: 'currentColor', fill: 'none', strokeWidth: 1 }} />
-                    </svg>
-                    <PulseNode top="20%" left="45%" color="bg-secondary" />
-                    <PulseNode top="35%" left="58%" color="bg-fuchsia" />
-                    <PulseNode top="65%" left="52%" color="bg-accent" />
-                    <PulseNode top="42%" left="78%" color="bg-primary" />
-                </div>
+          <motion.section key="landing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="pt-32 px-6 flex flex-col items-center text-center max-w-4xl mx-auto">
+            <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-6">Predict the future. <br/><span className="text-blue-600">Trade on outcomes.</span></h1>
+            <p className="text-xl text-slate-500 dark:text-slate-400 mb-10 max-w-2xl">The first prediction market built for Africa. Trade on sports, politics, and local economics with instant payouts.</p>
+            <div className="flex gap-4">
+              <Button size="lg" className="px-8" onClick={() => setView('auth')}>Start Trading <ArrowRight className="ml-2" /></Button>
+              <Button size="lg" variant="secondary">View Markets</Button>
             </div>
-
-            <div className="w-full max-w-7xl px-12 z-10 flex flex-col items-start text-left relative">
-                <div className="max-w-2xl">
-                    <motion.h1
-                      initial={{ opacity: 0, x: -50 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      className="text-6xl md:text-7xl font-black tracking-tighter leading-[0.9] mb-8 italic text-probix-text dark:text-white uppercase"
-                    >
-                      The future<br />isn&apos;t guessed.<br />It&apos;s <span className="text-primary drop-shadow-glow">forecasted.</span>
-                    </motion.h1>
-
-                    <motion.p
-                      initial={{ opacity: 0, x: -30 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.2 }}
-                      className="text-lg md:text-xl text-probix-muted font-bold mb-10 italic opacity-80"
-                    >
-                      Join 42,831 Africans forecasting what matters most.
-                    </motion.p>
-
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.4 }}
-                      className="flex flex-wrap items-center gap-4 mb-16"
-                    >
-                      <Button size="lg" className="!rounded-full !px-8 !py-5 text-base font-black uppercase italic shadow-glow group" onClick={() => setView('onboarding')}>
-                        Explore trending <ArrowRight className="ml-3 group-hover:translate-x-2 transition-transform" />
-                      </Button>
-                      <button className="flex items-center gap-3 px-6 py-4 rounded-full border border-probix-border dark:border-white/10 hover:border-primary/40 bg-probix-surface dark:bg-white/5 transition-all group/play">
-                        <div className="w-6 h-6 rounded-full border border-probix-border dark:border-white/20 flex items-center justify-center group-hover/play:border-primary transition-colors">
-                            <CirclePlay size={12} className="text-probix-text dark:text-white group-hover:text-primary transition-colors" />
-                        </div>
-                        <span className="text-xs font-black uppercase italic tracking-widest text-probix-text dark:text-white group-hover:text-primary transition-colors">How Probix works</span>
-                      </button>
-                    </motion.div>
-                </div>
-
-                <div className="absolute top-[-5%] right-[25%] hidden lg:block">
-                    <GlassBadge icon={<TrendingUp size={16} className="text-secondary" />} color="border-secondary/50" text="Inflation < 18%" stat="72% Yes" statColor="text-secondary" />
-                </div>
-                <div className="absolute top-[25%] right-[40%] hidden lg:block">
-                    <GlassBadge icon={<Zap size={16} className="text-fuchsia" />} color="border-fuchsia/50" text="AFCON 2027 Morocco" stat="65% Yes" statColor="text-fuchsia" />
-                </div>
+            <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
+               <FeatureCard icon={<TrendingUp/>} title="Live Markets" desc="Real-time outcomes on topics that matter to you." />
+               <FeatureCard icon={<Shield/>} title="Secure" desc="Built on decentralized protocols for total safety." />
+               <FeatureCard icon={<Zap/>} title="Instant" desc="Lightning fast settlement and withdrawals." />
             </div>
-
-            {/* TRENDING TICKER */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="w-full overflow-hidden bg-probix-surface border-y border-probix-border py-6 mb-20"
-            >
-                <div className="flex animate-scroll whitespace-nowrap gap-16 items-center">
-                    {[1, 2, 3, 4, 5, 6].map(i => (
-                        <div key={i} className="flex items-center gap-4 shrink-0 group cursor-pointer">
-                            <span className="text-2xl grayscale group-hover:grayscale-0 transition-all">{['🇳🇬', '⚽', '🏛️', '🚀', '📈', '₿'][i-1]}</span>
-                            <span className="text-[10px] font-black uppercase tracking-widest text-probix-muted group-hover:text-primary transition-colors">
-                                {['Naira Stability', 'Super Eagles Qualify', '2027 Election Polls', 'Flutterwave IPO', 'Global Tech Drift', 'Bitcoin Node'][i-1]}
-                            </span>
-                            <span className="text-secondary font-black italic">{(60 + i * 5)}% YES</span>
-                        </div>
-                    ))}
-                    {[1, 2, 3, 4, 5, 6].map(i => (
-                        <div key={`dup-${i}`} className="flex items-center gap-4 shrink-0 group cursor-pointer">
-                            <span className="text-2xl grayscale group-hover:grayscale-0 transition-all">{['🇳🇬', '⚽', '🏛️', '🚀', '📈', '₿'][i-1]}</span>
-                            <span className="text-[10px] font-black uppercase tracking-widest text-probix-muted group-hover:text-primary transition-colors">
-                                {['Naira Stability', 'Super Eagles Qualify', '2027 Election Polls', 'Flutterwave IPO', 'Global Tech Drift', 'Bitcoin Node'][i-1]}
-                            </span>
-                            <span className="text-secondary font-black italic">{(60 + i * 5)}% YES</span>
-                        </div>
-                    ))}
-                </div>
-            </motion.div>
           </motion.section>
         )}
 
-        {/* --- VIEW: ONBOARDING --- */}
-        {view === 'onboarding' && (
-          <OnboardingView onComplete={() => setView('auth')} />
-        )}
-
-        {/* --- VIEW: AUTH --- */}
         {view === 'auth' && (
-          <AuthView
-            mode={authMode}
-            toggleMode={() => setAuthMode(m => m === 'login' ? 'signup' : 'login')}
-            onComplete={() => {
-              login();
-              router.push('/dashboard');
-            }}
-          />
+          <motion.section key="auth" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="pt-32 flex justify-center px-6">
+            <div className="w-full max-w-md p-8 bg-slate-50 dark:bg-white/5 rounded-3xl border border-slate-200 dark:border-white/10">
+              <h2 className="text-3xl font-black mb-6">{authMode === 'login' ? 'Welcome Back' : 'Create Account'}</h2>
+              <div className="space-y-4">
+                <input type="text" placeholder="Username" className="w-full p-4 rounded-xl bg-white dark:bg-black border border-slate-200 dark:border-white/10" />
+                <input type="password" placeholder="Password" className="w-full p-4 rounded-xl bg-white dark:bg-black border border-slate-200 dark:border-white/10" />
+                <Button className="w-full py-4 text-lg" onClick={() => { login(); router.push('/dashboard'); }}>
+                  {authMode === 'login' ? 'Log In' : 'Sign Up'}
+                </Button>
+                <button onClick={() => setAuthMode(authMode === 'login' ? 'signup' : 'login')} className="w-full text-center text-sm text-slate-500">
+                  {authMode === 'login' ? "Don't have an account? Sign Up" : "Already have an account? Log In"}
+                </button>
+              </div>
+            </div>
+          </motion.section>
         )}
-
       </AnimatePresence>
     </div>
   );
 }
 
-// --- SUB-COMPONENTS (Simplified) ---
-
-function OnboardingView({ onComplete }: { onComplete: () => void }) {
-  const [step, setStep] = useState(0);
-  const steps = [
-    { title: "Trade on Outcomes.", desc: "Use your local expertise to predict the future of sports, politics, and economics.", icon: <TrendingUp size={40} className="text-primary" /> },
-    { title: "Instant Settlement.", desc: "Fast, secure payouts on the Base network. Direct withdrawals to your Naira bridge.", icon: <Shield size={40} className="text-secondary" /> },
-    { title: "African Accuracy.", desc: "Access the most precise prediction engine in Africa. Institutional-grade data.", icon: <Zap size={40} className="text-accent" /> }
-  ];
-
+function FeatureCard({ icon, title, desc }: any) {
   return (
-    <motion.div initial={{ opacity: 0, scale: 1.02 }} animate={{ opacity: 1, scale: 1 }} className="min-h-screen flex items-center justify-center p-8 bg-probix-bg">
-      <div className="max-w-5xl w-full glass rounded-[48px] p-16 flex flex-col lg:flex-row gap-12 items-center shadow-3xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-primary/5 blur-[100px]" />
-        <div className="flex-1 space-y-8 relative z-10 text-left">
-          <motion.div key={step} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-            <div className="inline-block p-5 rounded-2xl bg-primary/10 border border-primary/20 shadow-inner mb-4">{steps[step].icon}</div>
-            <h2 className="text-5xl md:text-6xl font-black italic tracking-tighter leading-[0.9] text-probix-text uppercase">{steps[step].title}</h2>
-            <p className="text-xl text-probix-muted font-bold italic leading-relaxed opacity-80 max-w-md">{steps[step].desc}</p>
-          </motion.div>
-          <div className="flex gap-6 pt-6">
-            <Button size="lg" className="flex-1 !rounded-2xl !py-6 text-xl uppercase italic font-black shadow-glow active:scale-95 shadow-primary/30" onClick={() => step < 2 ? setStep(s => s + 1) : onComplete()}>
-              {step < 2 ? "Continue" : "Get Started"}
-            </Button>
-            <Button size="lg" variant="secondary" className="px-10 !rounded-2xl glass !py-6 text-xl uppercase italic font-black active:scale-95" onClick={onComplete}>Skip</Button>
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
-function AuthView({ mode, toggleMode, onComplete }: any) {
-  return (
-    <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="min-h-screen flex items-center justify-center p-6 bg-probix-bg">
-      <div className="max-w-[440px] w-full glass rounded-[40px] p-12 border-probix-border dark:border-white/10 shadow-3xl relative overflow-hidden">
-        <div className="text-center mb-10 relative z-10 flex flex-col items-center">
-          <ProbixLogo size="md" />
-          <h2 className="text-4xl font-black italic tracking-tighter mb-4 mt-8 leading-none text-probix-text uppercase">
-            {mode === 'login' ? 'Authorize' : 'Initialize'}
-          </h2>
-          <p className="text-[10px] font-black text-probix-muted uppercase tracking-[0.4em] italic opacity-60">Terminal Session 2.4.0</p>
-        </div>
-
-        <div className="space-y-5 relative z-10 text-left">
-          <input type="text" placeholder="Username or Oracle ID" className="w-full bg-probix-surface/50 border border-probix-border rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all font-bold italic text-base placeholder:opacity-20 text-probix-text" />
-          <input type="password" placeholder="••••••••••••••••" className="w-full bg-probix-surface/50 border border-probix-border rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all font-bold italic text-base placeholder:opacity-20 text-probix-text" />
-          <Button size="lg" className="w-full !py-6 text-xl mt-6 !rounded-[24px] italic font-black tracking-[0.2em] shadow-glow active:scale-95 uppercase" onClick={onComplete}>
-            {mode === 'login' ? 'Seal Session' : 'Access Node'}
-          </Button>
-        </div>
-
-        <p className="text-center mt-10 text-sm font-bold text-probix-muted italic">
-          {mode === 'login' ? "Protocol handle not found? " : "Access established? "}
-          <button onClick={toggleMode} className="text-primary hover:underline italic font-black ml-1 uppercase tracking-tighter text-base">
-            {mode === 'login' ? 'Initialize' : 'Authorize'}
-          </button>
-        </p>
-      </div>
-    </motion.div>
+    <div className="p-6 bg-slate-50 dark:bg-white/5 rounded-2xl border border-slate-100 dark:border-white/5 text-left">
+      <div className="text-blue-600 mb-4">{icon}</div>
+      <h3 className="font-bold text-lg mb-2">{title}</h3>
+      <p className="text-slate-500 dark:text-slate-400 text-sm">{desc}</p>
+    </div>
   );
 }
