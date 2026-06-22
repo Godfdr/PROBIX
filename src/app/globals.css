@@ -1,15 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-  /* Elite Pro Palette (OKLCH) */
-  --color-primary: oklch(65% 0.22 250);      /* Intense Elite Blue */
-  --color-secondary: oklch(75% 0.18 160);    /* Tech Green */
+  /* PROBIX Elite Pro Palette (OKLCH) */
+  --color-primary: oklch(65% 0.22 250);      /* Intense PROBIX Blue */
+  --color-secondary: oklch(75% 0.18 160);    /* Market Green */
   --color-fuchsia: oklch(70% 0.25 330);
   --color-accent: oklch(80% 0.18 85);
   --color-crimson: oklch(60% 0.2 25);
 
   --color-primary-glow: oklch(65% 0.22 250 / 40%);
 
+  /* Lacquer Aesthetics (pbakaus Skill) */
   --color-lacquer-black: oklch(7% 0.006 250);
   --color-raised-lacquer: oklch(11% 0.01 250);
 
