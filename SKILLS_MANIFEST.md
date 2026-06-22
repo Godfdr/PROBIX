@@ -27,8 +27,15 @@ This manifest documents the high-quality UI/UX and Design Engineering skills ins
     - Optical alignment over strict geometric centering.
 
 ## 4. Leonxlnx: Taste Skill
-**Focus:** Premium "Taste" module for AI agents.
+**Focus:** Elimination of "AI-slop" and premium intentionality.
 - **Rules:**
     - Elimination of "AI-slop" design patterns.
     - Preference for custom cubic-bezier easings.
     - Intentional whitespace and typography-first layouts.
+
+## 5. NextLevelBuilder: UI/UX Pro Max
+**Focus:** Industry-specific reasoning and high-fidelity design systems.
+- **Rules:**
+    - Use **Fintech Reasoning** (stable, precise, authoritative).
+    - 67+ UI Styles: Selective use of Glassmorphism and Bento-Grid.
+    - 99 UX Best Practices: Accessibility, data stability, and anti-pattern prevention.
