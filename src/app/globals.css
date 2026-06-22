@@ -27,6 +27,9 @@
   --glass-bg: rgba(255, 255, 255, 0.7);
   --glass-border: rgba(0, 0, 0, 0.05);
   font-size: 13px;
+
+  /* Animation Easing */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 [data-theme='dark'] {

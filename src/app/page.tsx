@@ -1,20 +1,8 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from 'react';
-import {
-  motion,
-  AnimatePresence,
-  useMotionValue
-} from 'framer-motion';
-import {
-  ArrowRight,
-  TrendingUp,
-  Shield,
-  Zap,
-  Lock,
-  User,
-  CirclePlay
-} from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, TrendingUp, Shield, Zap, Lock, User, CirclePlay } from 'lucide-react';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { Button } from '@/components/ui/Button';
 import { ProbixLogo } from '@/components/ui/ProbixLogo';
@@ -26,41 +14,39 @@ export default function ProbixLanding() {
   const [view, setView] = useState<'landing' | 'onboarding' | 'auth'>('landing');
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
   const router = useRouter();
-  const { login, isAuthenticated } = useProbix();
+  const { login, isAuthenticated, isHydrated } = useProbix();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Redirect if already authenticated
+  // Redirect if already authenticated and hydrated
   useEffect(() => {
-    if (mounted && isAuthenticated) router.push('/dashboard');
-  }, [isAuthenticated, router, mounted]);
+    if (mounted && isHydrated && isAuthenticated) {
+      router.push('/dashboard');
+    }
+  }, [isAuthenticated, isHydrated, router, mounted]);
 
-  // --- 3D MOTION SENSOR ---
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+  if (!mounted || !isHydrated) {
+    return (
+      <div className="min-h-screen bg-probix-bg flex items-center justify-center">
+        <ProbixLogo size="md" className="animate-pulse opacity-50" />
+      </div>
+    );
+  }
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    x.set((e.clientX - rect.left) / rect.width - 0.5);
-    y.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  if (!mounted) return null;
+  // If we are authenticated but haven't redirected yet, show loading to prevent flicker
+  if (isAuthenticated) {
+     return (
+      <div className="min-h-screen bg-probix-bg flex items-center justify-center">
+        <ProbixLogo size="md" className="animate-pulse opacity-50" />
+      </div>
+    );
+  }
 
   return (
-    <div
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="relative min-h-screen overflow-x-hidden selection:bg-primary/40 bg-probix-bg transition-colors duration-1000"
-    >
+    <div className="relative min-h-screen overflow-x-hidden selection:bg-primary/40 bg-probix-bg transition-colors duration-1000">
 
       {/* PERSISTENT NAV */}
       <nav className="fixed top-0 w-full z-[100] px-8 h-20 flex justify-between items-center bg-probix-bg/80 backdrop-blur-md border-b border-probix-border">
@@ -92,15 +78,6 @@ export default function ProbixLanding() {
                 <div className="relative w-full h-full max-w-7xl mx-auto flex items-center justify-end pr-10">
                     <svg viewBox="0 0 1000 1000" className="w-[800px] h-[800px] text-primary/40 fill-current overflow-visible">
                         <path d="M400,100 L450,100 L500,120 L550,150 L580,200 L600,250 L620,300 L650,320 L700,320 L750,350 L800,400 L820,450 L800,500 L750,600 L700,700 L650,800 L600,850 L550,900 L500,920 L450,900 L400,850 L350,750 L320,650 L300,550 L280,450 L250,400 L250,350 L280,300 L320,250 L350,200 Z" className="animate-pulse" style={{ strokeDasharray: '4 4', stroke: 'currentColor', fill: 'none', strokeWidth: 1 }} />
-                        <motion.path d="M500,400 Q700,400 800,450" stroke="url(#line-grad)" strokeWidth="1" fill="none" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 3, repeat: Infinity }} />
-                        <motion.path d="M400,200 Q500,300 500,400" stroke="url(#line-grad)" strokeWidth="1" fill="none" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 2.5, repeat: Infinity }} />
-                        <defs>
-                            <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stopColor="transparent" />
-                                <stop offset="50%" stopColor="#3B82F6" />
-                                <stop offset="100%" stopColor="transparent" />
-                            </linearGradient>
-                        </defs>
                     </svg>
                     <PulseNode top="20%" left="45%" color="bg-secondary" />
                     <PulseNode top="35%" left="58%" color="bg-fuchsia" />
@@ -152,12 +129,6 @@ export default function ProbixLanding() {
                 <div className="absolute top-[25%] right-[40%] hidden lg:block">
                     <GlassBadge icon={<Zap size={16} className="text-fuchsia" />} color="border-fuchsia/50" text="AFCON 2027 Morocco" stat="65% Yes" statColor="text-fuchsia" />
                 </div>
-                <div className="absolute bottom-[20%] right-[32%] hidden lg:block">
-                    <GlassBadge icon={<TrendingUp size={16} className="text-accent" />} color="border-accent/50" text="Dangote Refinery Profitable?" stat="55% Yes" statColor="text-accent" />
-                </div>
-                <div className="absolute top-[40%] right-[10%] hidden lg:block">
-                    <GlassBadge icon={<TrendingUp size={16} className="text-secondary" />} color="border-secondary/50" text="Naira < ₦2,000/$" stat="68% Yes" statColor="text-secondary" />
-                </div>
             </div>
 
             {/* TRENDING TICKER */}
@@ -177,7 +148,6 @@ export default function ProbixLanding() {
                             <span className="text-secondary font-black italic">{(60 + i * 5)}% YES</span>
                         </div>
                     ))}
-                    {/* Repeat for animation */}
                     {[1, 2, 3, 4, 5, 6].map(i => (
                         <div key={`dup-${i}`} className="flex items-center gap-4 shrink-0 group cursor-pointer">
                             <span className="text-2xl grayscale group-hover:grayscale-0 transition-all">{['🇳🇬', '⚽', '🏛️', '🚀', '📈', '₿'][i-1]}</span>
@@ -189,8 +159,6 @@ export default function ProbixLanding() {
                     ))}
                 </div>
             </motion.div>
-
-            <div className="h-20" />
           </motion.section>
         )}
 
@@ -216,7 +184,7 @@ export default function ProbixLanding() {
   );
 }
 
-// --- SUB-COMPONENTS ---
+// --- SUB-COMPONENTS (Simplified) ---
 
 function OnboardingView({ onComplete }: { onComplete: () => void }) {
   const [step, setStep] = useState(0);
@@ -240,21 +208,7 @@ function OnboardingView({ onComplete }: { onComplete: () => void }) {
             <Button size="lg" className="flex-1 !rounded-2xl !py-6 text-xl uppercase italic font-black shadow-glow active:scale-95 shadow-primary/30" onClick={() => step < 2 ? setStep(s => s + 1) : onComplete()}>
               {step < 2 ? "Continue" : "Get Started"}
             </Button>
-            <Button size="lg" variant="secondary" className="px-10 !rounded-2xl glass !py-6 text-xl uppercase italic font-black active:scale-95">Skip</Button>
-          </div>
-          <div className="flex gap-2 mt-8">
-             {steps.map((_, i) => <div key={i} className={`h-1.5 rounded-full transition-all duration-700 ${i === step ? "w-16 bg-primary shadow-glow" : "w-4 bg-probix-border"}`} />)}
-          </div>
-        </div>
-        <div className="hidden lg:flex flex-1 justify-center relative">
-          <div className="w-[400px] h-[400px] relative">
-            <motion.div animate={{ rotate: 360 }} transition={{ duration: 40, repeat: Infinity, ease: "linear" }} className="absolute inset-0 border-[2px] border-dashed border-primary/20 rounded-full" />
-            <div className="absolute inset-0 flex items-center justify-center">
-               <motion.div animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 4, repeat: Infinity }} className="w-48 h-48 bg-probix-surface rounded-[40px] border border-probix-border dark:border-white/10 shadow-3xl flex items-center justify-center z-10">
-                  <ProbixLogo size="lg" />
-               </motion.div>
-               <div className="absolute w-[300px] h-[300px] bg-primary/20 rounded-full blur-[100px] -z-0" />
-            </div>
+            <Button size="lg" variant="secondary" className="px-10 !rounded-2xl glass !py-6 text-xl uppercase italic font-black active:scale-95" onClick={onComplete}>Skip</Button>
           </div>
         </div>
       </div>
@@ -262,18 +216,10 @@ function OnboardingView({ onComplete }: { onComplete: () => void }) {
   );
 }
 
-interface AuthViewProps {
-  mode: 'login' | 'signup';
-  toggleMode: () => void;
-  onComplete: () => void;
-}
-
-function AuthView({ mode, toggleMode, onComplete }: AuthViewProps) {
+function AuthView({ mode, toggleMode, onComplete }: any) {
   return (
     <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="min-h-screen flex items-center justify-center p-6 bg-probix-bg">
       <div className="max-w-[440px] w-full glass rounded-[40px] p-12 border-probix-border dark:border-white/10 shadow-3xl relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-64 h-64 bg-primary/5 blur-[100px] -z-0" />
-
         <div className="text-center mb-10 relative z-10 flex flex-col items-center">
           <ProbixLogo size="md" />
           <h2 className="text-4xl font-black italic tracking-tighter mb-4 mt-8 leading-none text-probix-text uppercase">
@@ -283,43 +229,11 @@ function AuthView({ mode, toggleMode, onComplete }: AuthViewProps) {
         </div>
 
         <div className="space-y-5 relative z-10 text-left">
-          <div className="space-y-1.5 px-1">
-            <label className="text-[9px] font-black text-probix-muted uppercase tracking-[0.3em] ml-2">Protocol handle</label>
-            <div className="relative group">
-               <User className="absolute left-5 top-1/2 -translate-y-1/2 text-primary opacity-50 group-focus-within:opacity-100 transition-all" size={16}/>
-               <input
-                  type="text"
-                  placeholder="Username or Veltra ID"
-                  className="w-full bg-probix-surface/50 border border-probix-border rounded-2xl py-4 pl-14 pr-6 outline-none focus:border-primary/50 focus:bg-probix-surface transition-all font-bold italic text-base placeholder:opacity-20 text-probix-text shadow-inner"
-               />
-            </div>
-          </div>
-          <div className="space-y-1.5 px-1">
-            <label className="text-[9px] font-black text-probix-muted uppercase tracking-[0.3em] ml-2">Security Key</label>
-            <div className="relative group">
-               <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-primary opacity-50 group-focus-within:opacity-100 transition-all" size={16}/>
-               <input
-                  type="password"
-                  placeholder="••••••••••••••••"
-                  className="w-full bg-probix-surface/50 border border-probix-border rounded-2xl py-4 pl-14 pr-6 outline-none focus:border-primary/50 focus:bg-probix-surface transition-all font-bold italic text-base placeholder:opacity-20 text-probix-text shadow-inner"
-               />
-            </div>
-          </div>
-
-          <Button size="lg" className="w-full !py-6 text-xl mt-6 !rounded-[24px] italic font-black tracking-[0.2em] shadow-glow active:scale-95 shadow-primary/40 uppercase" onClick={onComplete}>
-            {mode === 'login' ? 'Establish Session' : 'Access Node'}
+          <input type="text" placeholder="Username or Oracle ID" className="w-full bg-probix-surface/50 border border-probix-border rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all font-bold italic text-base placeholder:opacity-20 text-probix-text" />
+          <input type="password" placeholder="••••••••••••••••" className="w-full bg-probix-surface/50 border border-probix-border rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all font-bold italic text-base placeholder:opacity-20 text-probix-text" />
+          <Button size="lg" className="w-full !py-6 text-xl mt-6 !rounded-[24px] italic font-black tracking-[0.2em] shadow-glow active:scale-95 uppercase" onClick={onComplete}>
+            {mode === 'login' ? 'Seal Session' : 'Access Node'}
           </Button>
-
-          <div className="relative py-6 flex items-center">
-            <div className="flex-1 h-px bg-probix-border" />
-            <span className="px-4 text-[8px] font-black text-probix-muted uppercase tracking-[0.4em] whitespace-nowrap opacity-60">OR SYNC ACCOUNT</span>
-            <div className="flex-1 h-px bg-probix-border" />
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-             <Button variant="secondary" className="!rounded-xl !py-4 glass italic font-black text-[9px] tracking-[0.1em] uppercase hover:bg-primary/10 transition-all border-probix-border dark:border-white/5">Veltra Wallet</Button>
-             <Button variant="secondary" className="!rounded-xl !py-4 glass italic font-black text-[9px] tracking-[0.1em] uppercase hover:bg-fuchsia/10 transition-all border-probix-border dark:border-white/5">Google Node</Button>
-          </div>
         </div>
 
         <p className="text-center mt-10 text-sm font-bold text-probix-muted italic">
