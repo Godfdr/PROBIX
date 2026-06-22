@@ -1,51 +1,108 @@
 @import "tailwindcss";
 
+@theme {
+  /* Elite Pro Palette (OKLCH) */
+  --color-primary: oklch(65% 0.22 250);      /* Intense Elite Blue */
+  --color-secondary: oklch(75% 0.18 160);    /* Tech Green */
+  --color-fuchsia: oklch(70% 0.25 330);
+  --color-accent: oklch(80% 0.18 85);
+  --color-crimson: oklch(60% 0.2 25);
+
+  --color-primary-glow: oklch(65% 0.22 250 / 40%);
+
+  --color-lacquer-black: oklch(7% 0.006 250);
+  --color-raised-lacquer: oklch(11% 0.01 250);
+
+  /* Theme-aware Backgrounds */
+  --color-probix-bg: var(--probix-bg);
+  --color-probix-surface: var(--probix-surface);
+  --color-probix-border: var(--probix-border);
+  --color-probix-text: var(--probix-text);
+}
+
 :root {
   --probix-bg: #FFFFFF;
-  --probix-text: #0F172A;
-  --probix-border: rgba(0, 0, 0, 0.08);
+  --probix-surface: #F9FAFB;
+  --probix-border: oklch(0% 0 0 / 8%);
+  --probix-text: oklch(15% 0.02 250);
+  --glass-bg: oklch(100% 0 0 / 70%);
+  --glass-border: oklch(0% 0 0 / 5%);
+  font-size: 14px;
+
+  /* Custom Easings (Taste Skill) */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 [data-theme='dark'] {
-  --probix-bg: #050505;
-  --probix-text: #F9FAFB;
-  --probix-border: rgba(255, 255, 255, 0.1);
+  --probix-bg: var(--color-lacquer-black);
+  --probix-surface: var(--color-raised-lacquer);
+  --probix-border: oklch(100% 0 0 / 10%);
+  --probix-text: oklch(95% 0.01 250);
+  --glass-bg: oklch(11% 0.01 250 / 60%);
+  --glass-border: oklch(100% 0 0 / 10%);
 }
 
 body {
   background-color: var(--probix-bg);
   color: var(--probix-text);
-  font-family: system-ui, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.4s var(--ease-out), color 0.4s var(--ease-out);
+  text-wrap: balance;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
 }
 
+/* Data Stability (jakubkrehel Skill) */
+.tabular {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* Glassmorphism 2.0 (Pro Max Skill) */
 @utility glass {
-  background-color: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  background-color: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
 }
 
-[data-theme='dark'] .glass {
-  background-color: rgba(0, 0, 0, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+/* Hairline borders (Impeccable Skill) */
+@utility hairline {
+  border-width: 0.5px;
+}
+
+/* Concentric Radius Utility (Feel Better Skill) */
+@utility bento-card {
+  @apply bg-probix-surface border border-probix-border rounded-[24px] p-8 transition-all duration-500;
+}
+
+/* Tactile Click (Emil Kowalski Skill) */
+.active-press:active {
+  transform: scale(0.97);
+  transition: transform 100ms var(--ease-out);
+}
+
+@utility shadow-glow {
+  box-shadow: 0 0 30px -5px var(--color-primary-glow);
+}
+
+@utility drop-shadow-glow {
+  filter: drop-shadow(0 0 10px var(--color-primary-glow));
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-scroll {
+  animation: scroll 40s linear infinite;
 }
 
 /* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
   background: var(--probix-border);
   border-radius: 10px;
-}
-
-.no-scrollbar::-webkit-scrollbar {
-    display: none;
-}
-.no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
 }
